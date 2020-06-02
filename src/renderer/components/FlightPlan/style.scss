@@ -1,0 +1,103 @@
+@import "../../globals.scss";
+
+$data: 25%;
+
+.flight-plan {
+    height: 100%;
+    width: 100%;
+
+    .map {
+        height: 75%;
+        width: 100% !important;
+        flex: 1;
+        position: relative;
+
+        .mgl-map-wrapper {
+            width: 100%;
+            height: 100%;
+            flex: 1;
+            position: relative;
+        }
+
+        .mapboxgl-canvas-container {
+            cursor: pointer;
+        }
+
+        .mapboxgl-map {
+            height: 100%;
+        }
+    }
+
+    .info {
+        padding: 1rem;
+        height: $data;
+        background-color: $block-bg-color;
+        color: #ffffff;
+        overflow: auto;
+
+        .points-table {
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse;
+            font-size: 1.2rem;
+
+            th {
+                padding: 1rem 0.5rem;
+            }
+
+            tr {
+                &:nth-child(2n-1) {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+
+                .cell {
+                    &--text {
+                        padding: 0.5rem;
+                    }
+
+                    &--empty {
+                        text-align: center;
+                    }
+
+                    select {
+                        width: 100%;
+                        border: 0;
+                        background: transparent;
+                        color: #ffffff;
+
+                        &:focus {
+                            outline: none;
+                        }
+
+                        option {
+                            background: $context-menu-bg;
+                        }
+                    }
+
+                    input {
+                        width: 100%;
+                        padding: 0.5rem;
+                        line-height: 1.2rem;
+                        border: 0;
+                        background: transparent;
+                        color: #ffffff;
+                        font-size: 1.2rem;
+
+                        &::-webkit-outer-spin-button,
+                        &::-webkit-inner-spin-button {
+                            -webkit-appearance: none;
+                            margin: 0;
+                        }
+                    }
+
+                    button {
+                        padding: 0.3rem 0.5rem;
+                        margin: 0.2rem;
+                        background-color: rgba(255, 255, 255, 0.1);
+                        color: #ffffff;
+                    }
+                }
+            }
+        }
+    }
+}

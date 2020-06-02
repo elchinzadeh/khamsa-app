@@ -1,0 +1,32 @@
+@font-face {
+    font-family: myriad;
+    src: url('~@/assets/fonts/myriad.otf');
+}
+
+@font-face {
+    font-family: helvetica;
+    src: url('~@/assets/fonts/helvetica.ttf');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    user-select: none;
+}
+
+body {
+    font-family: myriad;
+    overflow: hidden;
+}
+
+button {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+}

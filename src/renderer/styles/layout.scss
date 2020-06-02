@@ -1,0 +1,6 @@
+.layout {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - #{$header-height});
+    overflow: hidden;
+}

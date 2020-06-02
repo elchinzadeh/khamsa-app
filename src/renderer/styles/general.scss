@@ -1,0 +1,8 @@
+/* Scrollbar */
+.scrollbar::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: $scrollbar-color;
+}

@@ -1,0 +1,15 @@
+@import "~vue-context/dist/css/vue-context.css";
+
+.v-context {
+    padding: 0;
+    background-color: $context-menu-bg;
+    li a {
+        font-size: 1.2rem;
+        color: #ffffff;
+
+        &:hover {
+            color: #ffffff;
+            background-color: $context-menu-bg-hover;
+        }
+    }
+}
