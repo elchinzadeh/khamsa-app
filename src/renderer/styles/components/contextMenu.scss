@@ -5,10 +5,10 @@
     background-color: $context-menu-bg;
     li a {
         font-size: 1.2rem;
-        color: #ffffff;
+        color: $white;
 
         &:hover {
-            color: #ffffff;
+            color: $white;
             background-color: $context-menu-bg-hover;
         }
     }

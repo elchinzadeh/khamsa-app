@@ -42,7 +42,6 @@ export default {
         telemetry: {
             required: true,
             type: Object,
-            default: () => {},
         },
     },
 };

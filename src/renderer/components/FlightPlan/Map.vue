@@ -22,10 +22,17 @@
                     <CustomMarker
                         :text="index + 1"
                         :data-index="index"
-                        @click="pointClicked($event, point)"
+                        @click="pointClicked($event, index)"
                     />
                 </template>
             </MglMarker>
+
+            <MglGeojsonLayer
+                :sourceId="geoJsonSource.data.id"
+                :source="geoJsonSource"
+                layerId="somethingSomething"
+                :layer="geoJsonLayer"
+            />
         </MglMap>
         <ContextMenu ref="context" />
     </div>
@@ -53,6 +60,29 @@ export default {
         MglGeojsonLayer,
         CustomMarker: Marker,
         ContextMenu,
+    },
+    data() {
+        return {
+            geoJsonSource: {
+                type: "geojson",
+                data: {
+                    id: "waypoints",
+                    type: "Feature",
+                    geometry: {
+                        type: "LineString",
+                        coordinates: [],
+                    },
+                },
+            },
+            geoJsonLayer: {
+                // https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#line
+                type: "line",
+                paint: {
+                    "line-color": "#0000ff",
+                    "line-width": 2,
+                },
+            },
+        };
     },
     created() {
         Vue.prototype.$flightPlanMap = null;
@@ -82,9 +112,9 @@ export default {
 
             this.$store.dispatch("updatePoint", payload);
         },
-        pointClicked(e, point) {
+        pointClicked(e, pointIndex) {
             e.stopPropagation();
-            console.log(`Marker clicked`);
+            this.$store.dispatch("selectPoint", pointIndex);
         },
         handleContextMenu(event) {
             this.$refs.context.open(event);
@@ -104,6 +134,15 @@ export default {
             set(payload) {
                 return this.$store.dispatch.addPoint(payload);
             },
+        },
+    },
+    watch: {
+        points(points) {
+            this.geoJsonSource.data.geometry.coordinates = this.points.map(
+                ({ coordinates }) => {
+                    return [coordinates.longitude, coordinates.latitude];
+                }
+            );
         },
     },
 };

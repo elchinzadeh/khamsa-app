@@ -72,6 +72,11 @@
                         </button>
                     </li>
                     <li class="toolbar__menu--list--item">
+                        <button @click="takeoff">
+                            <span>Takeoff</span>
+                        </button>
+                    </li>
+                    <li class="toolbar__menu--list--item">
                         <MenuDropdown>
                             Mode: {{ activeModeName }}
                             <template slot="list">
@@ -148,14 +153,8 @@ export default {
             telemetrySocket: new SocketFallback(),
             expandSeachArea: false,
             dateRange: {
-                startDate: moment()
-                    .seconds(0)
-                    .milliseconds(0)
-                    .toISOString(),
-                endDate: moment()
-                    .seconds(0)
-                    .milliseconds(0)
-                    .toISOString(),
+                startDate: moment().seconds(0).milliseconds(0).toISOString(),
+                endDate: moment().seconds(0).milliseconds(0).toISOString(),
             },
             isDatePickerToggled: false,
             mode: {
@@ -274,8 +273,18 @@ export default {
                 .then((response) => {
                     console.log("Disarmed");
                 })
-                .catch((error) => {
+           .catch((error) => {
                     console.log("Disarming failed", error);
+                });
+        },
+        takeoff() {
+            axios
+                .get("http://localhost:8000/takeoff")
+                .then((response) => {
+                    console.log("Takeoff");
+                })
+                .catch((error) => {
+                    console.log("Takeoff failed", error);
                 });
         },
         collapse() {

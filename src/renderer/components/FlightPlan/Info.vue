@@ -12,7 +12,11 @@
             </thead>
             <tbody>
                 <!-- Waypoints -->
-                <tr v-for="(point, index) in points" :key="index">
+                <tr
+                    v-for="(point, index) in points"
+                    :key="index"
+                    :class="{ 'row--selected': index === selectedPointIndex }"
+                >
                     <td class="cell cell--text">
                         {{ index + 1 }}
                     </td>
@@ -143,6 +147,9 @@ export default {
     computed: {
         points() {
             return this.$store.state.flightPlan.points;
+        },
+        selectedPointIndex() {
+            return this.$store.state.flightPlan.selectedPointIndex;
         },
     },
 };
