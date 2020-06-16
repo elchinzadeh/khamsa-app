@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <fragment>
         <Header />
         <div class="layout">
             <router-view />
         </div>
-    </div>
+    </fragment>
 </template>
 
 <script>

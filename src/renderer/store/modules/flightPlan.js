@@ -13,7 +13,8 @@ const mutations = {
         });
     },
     UPDATE_POINT(state, payload) {
-        let point = state.points[payload.index];
+        const data = [...state.points];
+        const point = data[payload.index];
 
         if (payload.altitude) {
             point.altitude = payload.altitude;
@@ -31,7 +32,8 @@ const mutations = {
             point.command = payload.command;
         }
 
-        state.points[payload.index] = point;
+        data[payload.index] = point;
+        state.points = data;
     },
     DELETE_POINT(state, index) {
         state.points.splice(index, 1);

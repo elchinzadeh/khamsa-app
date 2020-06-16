@@ -5,7 +5,10 @@
             :mapStyle="mapStyle"
             @load="onMapLoaded"
         >
+            <!-- Navigation Control -->
             <MglNavigationControl position="top-right" />
+
+            <!-- Marker -->
             <MglMarker
                 v-for="(point, index) in points"
                 :key="index"
@@ -27,6 +30,7 @@
                 </template>
             </MglMarker>
 
+            <!-- GeoJSON Layer -->
             <MglGeojsonLayer
                 :sourceId="geoJsonSource.data.id"
                 :source="geoJsonSource"
@@ -34,6 +38,8 @@
                 :layer="geoJsonLayer"
             />
         </MglMap>
+
+        <!-- Context menu -->
         <ContextMenu ref="context" />
     </div>
 </template>
@@ -47,6 +53,7 @@ import {
     MglMarker,
     MglGeojsonLayer,
 } from "vue-mapbox";
+import axios from "axios";
 import { MAPBOX_TOKEN, MAPBOX_STYLE_MONOCHROME } from "@/core/constants.js";
 import Marker from "@/components/common/Marker";
 import ContextMenu from "./ContextMenu";

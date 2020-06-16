@@ -1,5 +1,5 @@
 <template>
-    <header class="header">
+    <div class="header">
         <!-- Menu bar -->
         <div class="header__menu">
             <!-- Logo -->
@@ -44,117 +44,124 @@
         <!-- Toolbar -->
         <div class="header__toolbar">
             <!-- Toobar list -->
-            <div
-                class="toolbar__menu"
-                :style="{
-                    transform: expandSeachArea ? 'scale(.8)' : 'scale(1)',
-                }"
-            >
-                <ul class="toolbar__menu--list">
-                    <li class="toolbar__menu--list--item">
-                        <button @click="starting">
-                            <span>Live</span>
-                        </button>
-                    </li>
-                    <li class="toolbar__menu--list--item">
-                        <button @click="stopping">
-                            <span>Stop</span>
-                        </button>
-                    </li>
-                    <li class="toolbar__menu--list--item">
-                        <button @click="arm">
-                            <span>Arm</span>
-                        </button>
-                    </li>
-                    <li class="toolbar__menu--list--item">
-                        <button @click="disarm">
-                            <span>Disarm</span>
-                        </button>
-                    </li>
-                    <li class="toolbar__menu--list--item">
-                        <button @click="takeoff">
-                            <span>Takeoff</span>
-                        </button>
-                    </li>
-                    <li class="toolbar__menu--list--item">
-                        <MenuDropdown>
-                            Mode: {{ activeModeName }}
-                            <template slot="list">
-                                <li
-                                    v-for="mode in mode.list"
-                                    :key="mode.key"
-                                    @click="changeMode(mode.key)"
-                                >
-                                    {{ mode.name }}
-                                </li>
-                            </template>
-                        </MenuDropdown>
-                    </li>
-                    <li class="toolbar__menu--list--item">
-                        <button @click="expandSeachArea = true">Archive</button>
-                    </li>
-                </ul>
-            </div>
+            <transition name="toolbar__menu">
+                <div class="toolbar__menu" v-if="!expandSeachArea">
+                    <ul class="toolbar__menu__list">
+                        <li
+                            class="toolbar__menu__list__item"
+                            :class="{
+                                'toolbar__menu__list__item--flickering': isConnected,
+                            }"
+                        >
+                            <button @click="starting">
+                                <span>Live</span>
+                            </button>
+                        </li>
+                        <li class="toolbar__menu__list__item">
+                            <button @click="stopping">
+                                <span>Stop</span>
+                            </button>
+                        </li>
+                        <li class="toolbar__menu__list__item">
+                            <MenuDropdown>
+                                Mode: {{ activeModeName }}
+                                <template slot="list">
+                                    <li
+                                        v-for="mode in mode.list"
+                                        :key="mode.key"
+                                        @click="changeMode(mode.key)"
+                                    >
+                                        {{ mode.name }}
+                                    </li>
+                                </template>
+                            </MenuDropdown>
+                        </li>
+
+                        <!-- Flight data items -->
+                        <FlightData
+                            v-if="page.active === 'flightData'"
+                            @expandSeachArea="expandSeachArea = true"
+                        />
+
+                        <!-- Flight plan items -->
+                        <FlightPlan v-if="page.active === 'flightPlan'" />
+                    </ul>
+                </div>
+            </transition>
 
             <!-- Search bar -->
-            <ul
-                class="toolbar__search"
-                :style="{
-                    transform: expandSeachArea
-                        ? 'translateY(100%)'
-                        : 'translateY(0)',
-                }"
-            >
-                <li>
-                    <span>Date range:&nbsp;&nbsp;&nbsp;</span>
-                    <date-range-picker
-                        v-model="dateRange"
-                        @toggle="isDatePickerToggled = $event"
-                        :locale-data="{ firstDay: 1, format: 'DD-MM-YYYY' }"
-                        class="custom-date-range-picker"
-                        :auto-apply="true"
-                        :update="dateRangeUpdated"
-                    >
-                    </date-range-picker>
-                </li>
-                <li>
-                    <button class="confirm" @click="search">Search</button>
-                </li>
-                <li>
-                    <button class="cancel" @click="expandSeachArea = false">
-                        Cancel
-                    </button>
-                </li>
-            </ul>
+            <transition name="toolbar__search">
+                <ul class="toolbar__search" v-if="expandSeachArea">
+                    <li>
+                        <span>Date range:&nbsp;&nbsp;&nbsp;</span>
+                        <date-range-picker
+                            v-model="dateRange"
+                            @toggle="isDatePickerToggled = $event"
+                            :locale-data="{ firstDay: 1, format: 'DD-MM-YYYY' }"
+                            class="custom-date-range-picker"
+                            :auto-apply="true"
+                            :update="dateRangeUpdated"
+                        >
+                        </date-range-picker>
+                    </li>
+                    <li>
+                        <button class="confirm" @click="search">Search</button>
+                    </li>
+                    <li>
+                        <button class="cancel" @click="expandSeachArea = false">
+                            Cancel
+                        </button>
+                    </li>
+                </ul>
+            </transition>
         </div>
-    </header>
+    </div>
 </template>
 
 <script>
+// Dependencies
 import { remote } from "electron";
+import DateRangePicker from "vue2-daterange-picker";
+import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
+import moment from "moment/src/moment.js";
+import axios from "axios";
+
+// Utils
 import { $exit, $error } from "@/core/popup_options.js";
 import { swal, toast, loading } from "@/core/popups.js";
 import SocketService from "@/core/socket.js";
 import SocketFallback from "@/core/socket_fallback.js";
 import { $host } from "@/core/constants.js";
-import DateRangePicker from "vue2-daterange-picker";
-import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
-import moment from "moment/src/moment.js";
-import axios from "axios";
-import MenuDropdown from "./common/MenuDropdown";
+
+// Components
+import MenuDropdown from "../common/MenuDropdown";
+import FlightData from "./FlightData";
+import FlightPlan from "./FlightPlan";
+
+// Styles
+import "./style.scss";
 
 export default {
     components: {
         DateRangePicker,
         MenuDropdown,
+        FlightData,
+        FlightPlan,
     },
     data() {
         return {
             telemetrySocket: new SocketFallback(),
+            isConnected: false,
             expandSeachArea: false,
             dateRange: {
-                startDate: moment().seconds(0).milliseconds(0).toISOString(),
-                endDate: moment().seconds(0).milliseconds(0).toISOString(),
+                startDate: moment()
+                    .seconds(0)
+                    .milliseconds(0)
+                    .toISOString(),
+                endDate: moment()
+                    .seconds(0)
+                    .milliseconds(0)
+                    .toISOString(),
             },
             isDatePickerToggled: false,
             mode: {
@@ -183,12 +190,12 @@ export default {
                     {
                         key: "flightData",
                         name: "Flight data",
-                        icon: require("../assets/icons/compass.svg"),
+                        icon: require("../../assets/icons/compass.svg"),
                     },
                     {
                         key: "flightPlan",
                         name: "Flight plan",
-                        icon: require("../assets/icons/earth.svg"),
+                        icon: require("../../assets/icons/earth.svg"),
                     },
                 ],
                 active: "flightData",
@@ -210,7 +217,7 @@ export default {
             loading.fire();
             loading.showLoading();
             this.telemetrySocket = new WebSocket(
-                "ws://127.0.0.1:8000/telemetry"
+                "ws://172.16.40.96:8000/telemetry"
             );
 
             let intervalCallsCount = 0;
@@ -225,6 +232,7 @@ export default {
                     this.telemetrySocket.close();
                     this.telemetrySocket = new SocketFallback();
                     clearInterval(intervalId);
+                    this.isConnected = false;
                 }
 
                 if (this.telemetrySocket.OPEN == 1) {
@@ -234,6 +242,7 @@ export default {
                         title: "Connected",
                     });
                     clearInterval(intervalId);
+                    this.isConnected = true;
                 }
             }, 300);
 
@@ -246,6 +255,7 @@ export default {
             if (this.telemetrySocket.OPEN == 1) {
                 this.telemetrySocket.close();
                 this.telemetrySocket = new SocketFallback();
+                this.isConnected = false;
                 return toast.fire({
                     type: "success",
                     title: "Socket connection successfully closed",
@@ -256,36 +266,6 @@ export default {
                 type: "warning",
                 title: "There is not an existing connection",
             });
-        },
-        arm() {
-            axios
-                .get("http://localhost:8000/arm")
-                .then((response) => {
-                    console.log("Armed");
-                })
-                .catch((error) => {
-                    console.log("Arming failed", error);
-                });
-        },
-        disarm() {
-            axios
-                .get("http://localhost:8000/disarm")
-                .then((response) => {
-                    console.log("Disarmed");
-                })
-           .catch((error) => {
-                    console.log("Disarming failed", error);
-                });
-        },
-        takeoff() {
-            axios
-                .get("http://localhost:8000/takeoff")
-                .then((response) => {
-                    console.log("Takeoff");
-                })
-                .catch((error) => {
-                    console.log("Takeoff failed", error);
-                });
         },
         collapse() {
             let window = remote.getCurrentWindow();
@@ -340,29 +320,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-@import "@/styles/components/header.scss";
-
-.custom-date-range-picker {
-    color: #000;
-
-    & .reportrange-text {
-        padding: 0.5rem 2rem;
-        background-color: #595959;
-        border: none;
-        outline: none;
-        color: #fff;
-        border-radius: 3px;
-    }
-
-    & .daterangepicker {
-        transform: translate(-30%) !important;
-
-        &.openscenter:before,
-        &.openscenter:after {
-            left: -40% !important;
-        }
-    }
-}
-</style>

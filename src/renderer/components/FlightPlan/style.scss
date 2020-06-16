@@ -35,6 +35,23 @@ $data: 25%;
         color: $white;
         overflow: auto;
 
+        .action-bar {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: flex-end;
+
+            button.action {
+                padding: 0.5rem 1rem;
+                background-color: $gray-300;
+                color: $white;
+                transition: all $transition-duration;
+
+                &:hover {
+                    background-color: $accent;
+                }
+            }
+        }
+
         .points-table {
             width: 100%;
             text-align: left;

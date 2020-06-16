@@ -1,4 +1,4 @@
-export const $host = "http://127.0.0.1:8000";
+export const $host = "http://172.16.40.96:8000";
 export const TELEMETRY_PACKET_PARAMETERS_COUNT = 16;
 export const MAPBOX_TOKEN =
     "pk.eyJ1IjoiZXZ6eiIsImEiOiJja2FucXU1M3YwZ3ZoMnRxb2Z4N2U4NnRkIn0.BfkkW5yrWWxMd_TNWyJPkA";

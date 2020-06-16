@@ -1,5 +1,11 @@
 <template>
     <div class="info scrollbar">
+        <!-- Action bar -->
+        <div class="action-bar">
+            <button class="action">Upload mission</button>
+        </div>
+
+        <!-- Table -->
         <table class="points-table">
             <thead>
                 <th>ID</th>
@@ -125,6 +131,7 @@ export default {
                 command: e.target.value,
             };
             this.$store.dispatch("updatePoint", payload);
+            this.$emit("insertWaypoints");
         },
         inputChange(e) {
             const data = {};
@@ -139,6 +146,7 @@ export default {
             }
 
             this.$store.dispatch("updatePoint", data);
+            this.$emit("insertWaypoints");
         },
         deletePoint(index) {
             this.$store.dispatch("deletePoint", index);

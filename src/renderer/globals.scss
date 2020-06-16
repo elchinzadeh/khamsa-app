@@ -11,6 +11,8 @@ $gray-500: #282828;
 $gray-600: #222222;
 $gray-700: #111111;
 $accent: #3085d6;
+$green-darken-100: #00cc00;
+$green-darken-200: #009900;
 
 /**
  *  Colors
@@ -31,3 +33,5 @@ $header-menu-height: 4rem;
 $header-toolbar-height: 4rem;
 $header-height: $header-menu-height + $header-toolbar-height;
 $sidebar-width: 30vw;
+
+$transition-duration: 0.3s;

@@ -33,7 +33,7 @@ export default {
             };
 
             axios
-                .post("http://127.0.0.1:8000/flyToHere", data)
+                .post("http://172.16.40.96:8000/flyToHere", data)
                 .then((response) => {
                     // response
                     console.log(response);
