@@ -30,7 +30,7 @@ export default {
 
             axios
                 .post(
-                    "http://172.16.40.96:8000/insertWaypointsOrSomethingElse",
+                    "http://127.0.0.1:8000/insertWaypointsOrSomethingElse",
                     data
                 )
                 .then((response) => {

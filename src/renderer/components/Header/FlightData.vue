@@ -29,7 +29,7 @@ export default {
     methods: {
         arm() {
             axios
-                .get("http://172.16.40.96:8000/arm")
+                .get("http://127.0.0.1:8000/arm")
                 .then((response) => {
                     console.log("Armed");
                 })
@@ -39,7 +39,7 @@ export default {
         },
         disarm() {
             axios
-                .get("http://172.16.40.96:8000/disarm")
+                .get("http://127.0.0.1:8000/disarm")
                 .then((response) => {
                     console.log("Disarmed");
                 })
@@ -49,7 +49,7 @@ export default {
         },
         takeoff() {
             axios
-                .get("http://172.16.40.96:8000/takeoff")
+                .get("http://127.0.0.1:8000/takeoff")
                 .then((response) => {
                     console.log("Takeoff");
                 })

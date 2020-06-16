@@ -217,7 +217,7 @@ export default {
             loading.fire();
             loading.showLoading();
             this.telemetrySocket = new WebSocket(
-                "ws://172.16.40.96:8000/telemetry"
+                "ws://127.0.0.1:8000/telemetry"
             );
 
             let intervalCallsCount = 0;
