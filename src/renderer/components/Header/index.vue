@@ -216,7 +216,7 @@ export default {
 			loading.showLoading();
 
 			// Reset initial coordinates of drone
-			this.$store.dispatch("setDroneInitialCoordinates", null);
+			this.$store.dispatch("setDroneInitialLocation", null);
 
 			this.telemetrySocket = new WebSocket(`${WS_HOST}/telemetry`);
 
@@ -248,6 +248,7 @@ export default {
 
 			this.telemetrySocket.onmessage = (event) => {
 				let parsedData = JSON.parse(event.data);
+				// console.log(parsedData);
 				this.$Bus.$emit("telemetry_data", parsedData);
 			};
 		},
