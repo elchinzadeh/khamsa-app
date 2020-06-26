@@ -14,11 +14,11 @@
         align-items: center;
         background-color: $header-bg;
         height: $header-menu-height;
-        z-index: 2;
         position: fixed;
-        top: 0;
+        top: 0 ;
         left: 0;
         right: 0;
+        z-index: 2;
 
         &--logo {
             height: 100%;
@@ -34,7 +34,6 @@
             height: 100%;
             display: flex;
             list-style-type: none;
-            flex: 1;
 
             .list-item {
                 height: 100%;
@@ -57,6 +56,12 @@
                     background-color: $header-toolbar-bg;
                 }
             }
+        }
+
+        &--dragable-area {
+            flex: 1;
+            -webkit-app-region: drag;
+            height: 100%;
         }
     }
 
@@ -113,7 +118,7 @@
                     height: 100%;
                     list-style: none;
 
-                    &__item {
+                    .list__item {
                         height: 100%;
                         padding: 0 1rem;
                         position: relative;
@@ -188,14 +193,32 @@
                             }
                         }
 
+                        .item__hover-content {
+                            display: none;
+                        }
+
+                        &--live {
+                            width: 6rem;
+                        }
+
                         &--flickering {
-                            animation-name: flickering;
+                            animation-name: flickering-green;
                             animation-duration: 2s;
                             animation-iteration-count: infinite;
                             animation-timing-function: ease-in-out;
+
+                            &:hover {
+                                animation-name: flickering-red;
+                                .item__default-content {
+                                    display: none;
+                                }
+                                .item__hover-content {
+                                    display: flex;
+                                }
+                            }
                         }
 
-                        @keyframes flickering {
+                        @keyframes flickering-green {
                             0% {
                                 background-color: $green-darken-100;
                             }
@@ -204,6 +227,17 @@
                             }
                             100% {
                                 background-color: $green-darken-100;
+                            }
+                        }
+                        @keyframes flickering-red {
+                            0% {
+                                background-color: $red-darken-100;
+                            }
+                            50% {
+                                background-color: $red-darken-200;
+                            }
+                            100% {
+                                background-color: $red-darken-100;
                             }
                         }
                     }
@@ -291,7 +325,7 @@
 
                 &-enter,
                 &-leave-to {
-                    transform: translateY(100%);
+                    transform: translateY(-100%);
                 }
 
                 .custom-date-range-picker {

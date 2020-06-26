@@ -1,6 +1,27 @@
 const state = {
     points: [],
     selectedPointIndex: null,
+    dronePath: {
+        geoJsonSource: {
+            type: "geojson",
+            data: {
+                id: "waypoints",
+                type: "Feature",
+                geometry: {
+                    type: "LineString",
+                    coordinates: [],
+                },
+            },
+        },
+        geoJsonLayer: {
+            // More info: https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#line
+            type: "line",
+            paint: {
+                "line-color": "#0000ff",
+                "line-width": 2,
+            },
+        },
+    }
 };
 
 const mutations = {
@@ -47,6 +68,9 @@ const mutations = {
     REMOVE_SELECTED_POINT(state) {
         state.selectedPointIndex = null;
     },
+    SET_DRONE_PATH_COORDINATES(state, coordinates) {
+        state.dronePath.geoJsonSource.data.geometry.coordinates = coordinates;
+    }
 };
 
 const actions = {
@@ -73,6 +97,9 @@ const actions = {
     removeSelectedPoint({ commit }) {
         commit("REMOVE_SELECTED_POINT");
     },
+    setDronePathCoordinates({commit}, payload) {
+        commit('SET_DRONE_PATH_COORDINATES', payload)
+    }
 };
 
 export default {

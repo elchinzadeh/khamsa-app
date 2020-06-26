@@ -1,35 +1,34 @@
 <template>
     <fragment>
-        <li class="toolbar__menu__list__item">
+        <li class="list__item">
             <button @click="arm">
                 <span>Arm</span>
             </button>
         </li>
-        <li class="toolbar__menu__list__item">
+        <li class="list__item">
             <button @click="disarm">
                 <span>Disarm</span>
             </button>
         </li>
-        <li class="toolbar__menu__list__item">
+        <li class="list__item">
             <button @click="takeoff">
                 <span>Takeoff</span>
             </button>
         </li>
-        <li class="toolbar__menu__list__item">
+        <li class="list__item">
             <button @click="archive">Archive</button>
         </li>
     </fragment>
 </template>
 
 <script>
-import axios from "axios";
+import API from "@/api";
 
 export default {
     name: "FlightDataHeader",
     methods: {
         arm() {
-            axios
-                .get("http://127.0.0.1:8000/arm")
+            API.arm()
                 .then((response) => {
                     console.log("Armed");
                 })
@@ -38,8 +37,7 @@ export default {
                 });
         },
         disarm() {
-            axios
-                .get("http://127.0.0.1:8000/disarm")
+            API.disarm()
                 .then((response) => {
                     console.log("Disarmed");
                 })
@@ -48,8 +46,7 @@ export default {
                 });
         },
         takeoff() {
-            axios
-                .get("http://127.0.0.1:8000/takeoff")
+            API.takeoff()
                 .then((response) => {
                     console.log("Takeoff");
                 })

@@ -63,6 +63,7 @@
     }
 
     &__indicators {
+        margin-top: $header-toolbar-height;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;

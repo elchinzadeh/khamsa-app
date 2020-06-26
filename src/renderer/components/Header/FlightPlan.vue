@@ -1,8 +1,6 @@
 <template>
     <fragment>
-        <li
-            class="toolbar__menu__list__item toolbar__menu__list__item--deactive"
-        >
+        <li class="list__item list__item--deactive">
             <button @click="startMission">Start mission</button>
         </li>
     </fragment>

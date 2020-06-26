@@ -2,7 +2,9 @@
     <div class="info scrollbar">
         <!-- Action bar -->
         <div class="action-bar">
-            <button class="action">Upload mission</button>
+            <button class="action" @click="uploadMission">
+                Upload mission
+            </button>
         </div>
 
         <!-- Table -->
@@ -100,6 +102,8 @@
 
 <script>
 import { TrashIcon } from "vue-feather-icons";
+import API from "@/api";
+import { toast } from "@/core/popups";
 
 export default {
     name: "FlightPlanInfo",
@@ -150,6 +154,14 @@ export default {
         },
         deletePoint(index) {
             this.$store.dispatch("deletePoint", index);
+        },
+        uploadMission() {
+            API.uploadMission(this.points).then((response) => {
+                toast.fire({
+                    type: "success",
+                    title: "Mission uploaded",
+                });
+            });
         },
     },
     computed: {

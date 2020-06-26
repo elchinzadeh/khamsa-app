@@ -27,6 +27,8 @@
                 </li>
             </ul>
 
+            <div class="header__menu--dragable-area"></div>
+
             <!-- Control menu -->
             <ul class="header__events">
                 <li class="header__events--item" @click="collapse">
@@ -48,21 +50,27 @@
                 <div class="toolbar__menu" v-if="!expandSeachArea">
                     <ul class="toolbar__menu__list">
                         <li
-                            class="toolbar__menu__list__item"
+                            class="list__item list__item--live"
                             :class="{
-                                'toolbar__menu__list__item--flickering': isConnected,
+                                'list__item--flickering': isConnected,
                             }"
                         >
-                            <button @click="starting">
+                            <button
+                                @click="starting"
+                                class="item__default-content"
+                            >
                                 <span>Live</span>
                             </button>
-                        </li>
-                        <li class="toolbar__menu__list__item">
-                            <button @click="stopping">
+
+                            <button
+                                @click="stopping"
+                                class="item__hover-content"
+                            >
                                 <span>Stop</span>
                             </button>
                         </li>
-                        <li class="toolbar__menu__list__item">
+
+                        <li class="list__item">
                             <MenuDropdown>
                                 Mode: {{ activeModeName }}
                                 <template slot="list">
@@ -127,11 +135,11 @@ import moment from "moment/src/moment.js";
 import axios from "axios";
 
 // Utils
+import { WS_HOST } from "@/core/constants.js";
 import { $exit, $error } from "@/core/popup_options.js";
 import { swal, toast, loading } from "@/core/popups.js";
 import SocketService from "@/core/socket.js";
 import SocketFallback from "@/core/socket_fallback.js";
-import { $host } from "@/core/constants.js";
 
 // Components
 import MenuDropdown from "../common/MenuDropdown";
@@ -216,9 +224,7 @@ export default {
 
             loading.fire();
             loading.showLoading();
-            this.telemetrySocket = new WebSocket(
-                "ws://127.0.0.1:8000/telemetry"
-            );
+            this.telemetrySocket = new WebSocket(`${WS_HOST}/telemetry`);
 
             let intervalCallsCount = 0;
             let intervalId = setInterval(() => {

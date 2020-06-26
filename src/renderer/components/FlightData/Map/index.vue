@@ -8,7 +8,7 @@
         >
             <MglNavigationControl position="top-right" />
         </MglMap>
-        <ContextMenu ref="context" />
+        <ContextMenu ref="context" @panToDrone="panToDrone" />
     </div>
 </template>
 
@@ -21,7 +21,7 @@ import * as turf from "@turf/turf";
 import * as mapboxgl from "mapbox-gl";
 import { swal } from "@/core/popups.js";
 import { $empty_result } from "@/core/popup_options.js";
-import { MAPBOX_TOKEN, MAPBOX_STYLE_MONOCHROME } from "@/core/constants.js";
+import { MAPBOX_TOKEN, MAPBOX_STYLE_MONOCHROME, MAPBOX_STYLE_SATELLITE } from "@/core/constants.js";
 import ContextMenu from "@/components/FlightData/Map/ContextMenu";
 
 import "./style.scss";
@@ -37,8 +37,7 @@ export default {
     },
     data() {
         return {
-            droneIconSource:
-                "https://cdn.iconscout.com/icon/premium/png-256-thumb/drone-93-502907.png",
+            droneIconSource: require("../../../assets/icons/drone_azercosmos.png"),
             featureCollection: {
                 id: "live-data",
                 type: "FeatureCollection",
@@ -86,6 +85,7 @@ export default {
                     layout: {
                         "icon-image": "drone",
                         "icon-size": 0.25,
+                        "icon-rotate": 0
                     },
                 });
             });
@@ -137,9 +137,13 @@ export default {
                     telemetry.longitude_deg,
                     telemetry.latitude_deg,
                 ];
+
+                // Drone trajectory
                 this.featureCollection.features[0].geometry.coordinates.push(
                     coordinates
                 );
+
+                // Drone Location
                 this.dronePattern.geometry.coordinates = coordinates;
 
                 this.$map
@@ -148,7 +152,13 @@ export default {
 
                 this.$map.getSource("drone").setData(this.dronePattern);
 
+                // Drone rotation
+                this.$map.setLayoutProperty('drone', 'icon-rotate', telemetry.yaw_deg + 90)
+
                 this.$map.panTo(coordinates);
+
+                // See what your brother will do
+                this.$forceUpdate();
             });
         },
         prepareDescription(coordinates) {
@@ -159,6 +169,9 @@ export default {
         },
         handleContextMenu(event) {
             this.$refs.context.open(event);
+        },
+        panToDrone() {
+            // this.$map.panTo(this.dronePattern.geometry.coordinates);
         },
     },
     computed: {

@@ -27,16 +27,6 @@ export default {
                     action_type: point.command,
                 };
             });
-
-            axios
-                .post(
-                    "http://127.0.0.1:8000/insertWaypointsOrSomethingElse",
-                    data
-                )
-                .then((response) => {
-                    // response
-                    console.log(response);
-                });
         },
     },
     computed: {
