@@ -119,6 +119,9 @@ export default {
 		geoJsonLayer() {
 			return this.$store.state.flightPlan.dronePath.geoJsonLayer;
 		},
+		droneInitialLocation() {
+			return this.$store.state.flightData.droneInitialLocation;
+		},
 	},
 	watch: {
 		points(points) {
@@ -126,6 +129,9 @@ export default {
 				return [coordinates.longitude, coordinates.latitude];
 			});
 			this.$store.dispatch("setDronePathCoordinates", coordinates);
+		},
+		droneInitialLocation(coordinates) {
+			this.$flightPlanMap.panTo(coordinates);
 		},
 	},
 };
