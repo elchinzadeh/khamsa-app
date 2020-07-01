@@ -26,8 +26,8 @@ export function uploadMission(data) {
 }
 
 // Start mission
-export function startMission(data) {
-	return _.post("/mission/start", data);
+export function startMission() {
+	return _.get("/mission/start");
 }
 
 export default {

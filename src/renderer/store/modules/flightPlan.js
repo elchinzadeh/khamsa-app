@@ -1,3 +1,5 @@
+import { Stats } from "fs";
+
 const state = {
     points: [],
     selectedPointIndex: null,
@@ -21,7 +23,8 @@ const state = {
                 "line-width": 2,
             },
         },
-    }
+    },
+    missionUploaded: false
 };
 
 const mutations = {
@@ -70,6 +73,9 @@ const mutations = {
     },
     SET_DRONE_PATH_COORDINATES(state, coordinates) {
         state.dronePath.geoJsonSource.data.geometry.coordinates = coordinates;
+    },
+    SET_MISSION_UPLOADED(state, status) {
+        state.missionUploaded = status;
     }
 };
 
@@ -97,8 +103,11 @@ const actions = {
     removeSelectedPoint({ commit }) {
         commit("REMOVE_SELECTED_POINT");
     },
-    setDronePathCoordinates({commit}, payload) {
+    setDronePathCoordinates({ commit }, payload) {
         commit('SET_DRONE_PATH_COORDINATES', payload)
+    },
+    setMissionUploaded({ commit }, payload) {
+        commit('SET_MISSION_UPLOADED', payload)
     }
 };
 

@@ -2,9 +2,7 @@
     <div class="info scrollbar">
         <!-- Action bar -->
         <div class="action-bar">
-            <button class="action" @click="uploadMission">
-                Upload mission
-            </button>
+            <button class="action" @click="uploadMission">Upload mission</button>
         </div>
 
         <!-- Table -->
@@ -25,9 +23,7 @@
                     :key="index"
                     :class="{ 'row--selected': index === selectedPointIndex }"
                 >
-                    <td class="cell cell--text">
-                        {{ index + 1 }}
-                    </td>
+                    <td class="cell cell--text">{{ index + 1 }}</td>
                     <td class="cell">
                         <select
                             name="command"
@@ -38,8 +34,7 @@
                                 v-for="command in commands"
                                 :key="command.key"
                                 :value="command.key"
-                                >{{ command.name }}</option
-                            >
+                            >{{ command.name }}</option>
                         </select>
                         <!-- {{ point.command }} -->
                     </td>
@@ -108,31 +103,31 @@ import { toast } from "@/core/popups";
 export default {
     name: "FlightPlanInfo",
     components: {
-        TrashIcon,
+        TrashIcon
     },
     data() {
         return {
             commands: [
                 {
                     key: "waypoint",
-                    name: "Waypoint",
+                    name: "Waypoint"
                 },
                 {
                     key: "takeoff",
-                    name: "Takeoff",
+                    name: "Takeoff"
                 },
                 {
                     key: "land",
-                    name: "Land",
-                },
-            ],
+                    name: "Land"
+                }
+            ]
         };
     },
     methods: {
         commandChange(e, index) {
             const payload = {
                 index,
-                command: e.target.value,
+                command: e.target.value
             };
             this.$store.dispatch("updatePoint", payload);
             this.$emit("insertWaypoints");
@@ -156,13 +151,14 @@ export default {
             this.$store.dispatch("deletePoint", index);
         },
         uploadMission() {
-            API.uploadMission(this.points).then((response) => {
+            API.uploadMission(this.points).then(response => {
+                this.$store.dispatch("setMissionUploaded", true);
                 toast.fire({
                     type: "success",
-                    title: "Mission uploaded",
+                    title: "Mission uploaded"
                 });
             });
-        },
+        }
     },
     computed: {
         points() {
@@ -170,7 +166,7 @@ export default {
         },
         selectedPointIndex() {
             return this.$store.state.flightPlan.selectedPointIndex;
-        },
-    },
+        }
+    }
 };
 </script>
