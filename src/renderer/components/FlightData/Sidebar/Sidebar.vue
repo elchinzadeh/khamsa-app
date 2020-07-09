@@ -3,7 +3,9 @@
         <Toolbar
             @last-logs-pressed="isLastLogsShown = !isLastLogsShown"
             @indicators-pressed="isIndicatorsShown = !isIndicatorsShown"
+            @mission-control-pressed="isMissionControlShown = !isMissionControlShown"
         />
+        <MissionControl v-show="isMissionControlShown" />
         <LastLogs :telemetry="telemetry" v-show="isLastLogsShown" />
         <Indicators v-show="isIndicatorsShown" />
     </div>
@@ -13,6 +15,7 @@
 import Toolbar from "@/components/FlightData/Sidebar/Toolbar";
 import LastLogs from "@/components/FlightData/Sidebar/LastLogs";
 import Indicators from "@/components/FlightData/Sidebar/Indicators";
+import MissionControl from "@/components/FlightData/Sidebar/MissionControl";
 import { TELEMETRY_PACKET_PARAMETERS_COUNT } from "@/core/constants.js";
 import "./style.scss";
 
@@ -21,6 +24,7 @@ export default {
         Toolbar,
         LastLogs,
         Indicators,
+        MissionControl
     },
     data() {
         return {
@@ -31,16 +35,17 @@ export default {
                 longitude: 0,
                 altitude: 0,
                 verticalSpeed: 0,
-                airSpeed: 0,
+                airSpeed: 0
             },
+            isMissionControlShown: false,
             isLastLogsShown: false,
             isIndicatorsShown: true,
             acceleration: {
                 x: 0,
                 y: 0,
                 z: 0,
-                time: 0,
-            },
+                time: 0
+            }
         };
     },
     mounted() {
@@ -53,7 +58,7 @@ export default {
                 longitude_deg = 0,
                 relative_altitude_m = 0,
                 velocity_down_m_s = 0,
-                velocity_east_m_s = 0,
+                velocity_east_m_s = 0
             }) => {
                 /* I don't know why this exists */
                 // if (
@@ -76,10 +81,10 @@ export default {
                         : 0,
                     airSpeed: velocity_east_m_s
                         ? Math.abs(velocity_east_m_s).toFixed(8)
-                        : 0,
+                        : 0
                 };
             }
         );
-    },
+    }
 };
 </script>

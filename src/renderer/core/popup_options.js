@@ -37,3 +37,16 @@ export const $exception_message = (data) => {
         showCancelButton: false
     };
 };
+
+export const $number_input = ({ title = '', inputValue = 0 }) => {
+    return {
+        title,
+        input: "number",
+        inputValue,
+        inputValidator: value => {
+            if (!value) {
+                return "You need to write something!";
+            }
+        }
+    };
+};

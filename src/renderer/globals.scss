@@ -3,6 +3,7 @@
  */
 $white: #ffffff;
 $black: #000000;
+$black-opacity-50: rgba(0, 0, 0, 0.5);
 $gray-100: #e8e8e8;
 $gray-200: #727272;
 $gray-300: #404040;
@@ -28,12 +29,22 @@ $border-color: $gray-300;
 $context-menu-bg: $gray-500;
 $context-menu-bg-hover: $gray-400;
 
+// Modal
+$modal-overlay-color: $black-opacity-50;
+$modal-header-background-color: $gray-700;
+$modal-header-text-color: $white;
+$modal-body-background-color: $gray-500;
+$modal-body-text-color: $white;
+
 /**
  *  Measurements
  */
 $header-menu-height: 4rem;
 $header-toolbar-height: 4rem;
-$header-height: $header-menu-height + $header-toolbar-height;
+$header-height: $header-menu-height+$header-toolbar-height;
 $sidebar-width: 30vw;
 
+/**
+ *  Timings
+ */
 $transition-duration: 0.3s;

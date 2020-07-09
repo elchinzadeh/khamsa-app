@@ -11,10 +11,10 @@ const api = axios.create({
 });
 
 api.interceptors.response.use(
-	function(response) {
+	function (response) {
 		return response;
 	},
-	function(error) {
+	function (error) {
 		if (!error.response) {
 			return swal.fire($connection_error).then((res) => {
 				if (res.value) {

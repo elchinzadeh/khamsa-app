@@ -2,9 +2,9 @@
     <div class="sidebar__indicators">
         <span id="attitude"></span>
         <span id="heading"></span>
-        <span id="variometer"></span>
-        <span id="airspeed"></span>
         <span id="altimeter"></span>
+        <span id="airspeed"></span>
+        <span id="variometer"></span>
     </div>
 </template>
 
@@ -44,7 +44,7 @@ export default {
                 yaw_deg = 0,
                 relative_altitude_m = 0,
                 velocity_down_m_s = 0,
-                velocity_east_m_s = 0,
+                velocity_east_m_s = 0
             }) => {
                 // if (Object.keys(telemetry).length < TELEMETRY_PACKET_PARAMETERS_COUNT) {
                 //     return
@@ -55,7 +55,7 @@ export default {
                 attitude.setPitch(pitch_deg);
                 airspeed.setAirSpeed(Math.abs(velocity_east_m_s));
                 variometer.setVario(Math.abs(velocity_down_m_s));
-                altimeter.setAltitude(relative_altitude_m);
+                altimeter.setAltitude(relative_altitude_m * 10);
             }
         );
     },
@@ -64,24 +64,24 @@ export default {
             initPositions: {
                 heading: {
                     heading: 0,
-                    showBox: true,
+                    showBox: true
                 },
                 attitude: {
                     roll: 0,
                     pitch: 0,
                     size: 200,
-                    showBox: true,
+                    showBox: true
                 },
                 variometer: {
                     vario: 0,
-                    showBox: true,
+                    showBox: true
                 },
                 airSpeed: {
-                    showBox: false,
-                },
-            },
+                    showBox: false
+                }
+            }
         };
-    },
+    }
 };
 </script>
 

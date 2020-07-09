@@ -2,7 +2,12 @@
     <div class="info scrollbar">
         <!-- Action bar -->
         <div class="action-bar">
-            <button class="action" @click="uploadMission">Upload mission</button>
+            <div class="action-bar__left">
+                <Checkbox v-model="returnToLand" label="Return to land" />
+            </div>
+            <div class="action-bar__right">
+                <Button @click="uploadMission">Upload mission</Button>
+            </div>
         </div>
 
         <!-- Table -->
@@ -99,11 +104,14 @@
 import { TrashIcon } from "vue-feather-icons";
 import API from "@/api";
 import { toast } from "@/core/popups";
+import { Button, Checkbox } from "@/components/common";
 
 export default {
     name: "FlightPlanInfo",
     components: {
-        TrashIcon
+        TrashIcon,
+        Button,
+        Checkbox
     },
     data() {
         return {
@@ -151,7 +159,14 @@ export default {
             this.$store.dispatch("deletePoint", index);
         },
         uploadMission() {
-            API.uploadMission(this.points).then(response => {
+            const body = [...this.points];
+
+            if (this.returnToLand) {
+                body.push(this.points[0]);
+                // deezer.com/en/track/883649052
+            }
+
+            API.uploadMission(body).then(response => {
                 this.$store.dispatch("setMissionUploaded", true);
                 toast.fire({
                     type: "success",
@@ -166,6 +181,14 @@ export default {
         },
         selectedPointIndex() {
             return this.$store.state.flightPlan.selectedPointIndex;
+        },
+        returnToLand: {
+            get() {
+                return this.$store.state.flightPlan.returnToLand;
+            },
+            set(value) {
+                this.$store.dispatch("setReturnToLand", value);
+            }
         }
     }
 };

@@ -212,6 +212,7 @@ export default {
             this.$store.dispatch("setDroneInitialLocation", null);
 
             this.telemetrySocket = new WebSocket(`${WS_HOST}/telemetry`);
+            console.log(`${WS_HOST}/telemetry`);
 
             let intervalCallsCount = 0;
             let intervalId = setInterval(() => {

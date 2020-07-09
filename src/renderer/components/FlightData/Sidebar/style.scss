@@ -5,29 +5,30 @@
     color: $font-color;
     z-index: 9;
     overflow-y: scroll;
-    // padding-top: $header-toolbar-height;
+    padding: $header-toolbar-height 1rem 0;
+    box-sizing: border-box;
 
     &__toolbar {
+        width: $sidebar-width;
         height: $header-toolbar-height;
         display: flex;
         align-items: center;
         padding: 0 1rem;
-        border-bottom: 3px solid $border-color;
+        border-bottom: 0.3rem solid $border-color;
         position: fixed;
-        // top: $header-height;
         left: 0;
         right: 0;
-        width: $sidebar-width;
+        transform: translateY(-$header-toolbar-height);
         background-color: $block-bg-color;
-        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.4);
         z-index: 1;
 
-        & > button {
+        &>button {
             &:not(:last-child) {
                 margin-right: 2rem;
             }
 
-            & > img {
+            &>img {
                 width: 1.5rem;
             }
         }
@@ -36,13 +37,13 @@
     &__last-logs {
         margin: 1rem auto;
         padding: 1rem;
-        border: 0.5px solid $border-color;
-        border-radius: 7px;
-        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
-        width: 93.5%;
+        border: 0.1rem solid $border-color;
+        border-radius: 0.6rem;
+        box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.4);
+        // width: 93.5%;
 
-        & > ul {
-            & > li {
+        &>ul {
+            &>li {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -51,7 +52,7 @@
                     margin-bottom: 1rem;
                 }
 
-                & > span {
+                &>span {
                     font-size: 1.5rem;
 
                     &:first-child {
@@ -63,27 +64,52 @@
     }
 
     &__indicators {
-        margin-top: $header-toolbar-height;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
+        width: 100%;
 
-        & > span {
+        &>span {
             &:first-child {
-                width: calc(#{$sidebar-width} - 1rem);
-                height: calc(#{$sidebar-width} - 1rem);
+                width: calc(#{$sidebar-width} - 2rem);
+                height: calc(#{$sidebar-width} - 2rem);
             }
 
             &:not(:first-child) {
-                width: calc((#{$sidebar-width} / 2) - 1rem);
-                height: calc((#{$sidebar-width} / 2) - 1rem);
+                width: calc((#{$sidebar-width} / 2) - 2rem);
+                height: calc((#{$sidebar-width} / 2) - 2rem);
             }
 
-            & > div {
+            &>div {
                 width: 100% !important;
                 height: 100% !important;
             }
+        }
+    }
+
+    &__mission-control {
+        margin: 1rem auto;
+        padding: 1rem;
+        border: 0.1rem solid $border-color;
+        border-radius: 0.6rem;
+        box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.4);
+
+        .actions {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+
+            &>* {
+                flex: 1;
+            }
+        }
+
+        .mission-progress {
+            width: 100%;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
         }
     }
 }

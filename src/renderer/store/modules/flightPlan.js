@@ -24,7 +24,8 @@ const state = {
             },
         },
     },
-    missionUploaded: false
+    missionUploaded: false,
+    returnToLand: false
 };
 
 const mutations = {
@@ -76,6 +77,9 @@ const mutations = {
     },
     SET_MISSION_UPLOADED(state, status) {
         state.missionUploaded = status;
+    },
+    SET_RETURN_TO_LAND(state, status) {
+        state.returnToLand = status;
     }
 };
 
@@ -108,6 +112,9 @@ const actions = {
     },
     setMissionUploaded({ commit }, payload) {
         commit('SET_MISSION_UPLOADED', payload)
+    },
+    setReturnToLand({ commit }, payload) {
+        commit('SET_RETURN_TO_LAND', payload)
     }
 };
 
