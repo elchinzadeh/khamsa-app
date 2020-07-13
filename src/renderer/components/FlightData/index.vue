@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Sidebar from "@/components/FlightData/Sidebar/Sidebar";
+import Sidebar from "@/components/FlightData/Sidebar";
 import Map from "@/components/FlightData/Map";
 import "./style.scss";
 
@@ -14,7 +14,7 @@ export default {
     name: "FlightData",
     components: {
         Sidebar,
-        Map,
-    },
+        Map
+    }
 };
 </script>

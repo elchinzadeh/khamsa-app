@@ -11,7 +11,7 @@
 import axios from "axios";
 // import VueResizable from "vue-resizable";
 
-import FlightPlanMap from "./Map";
+import FlightPlanMap from "./Map/index";
 import Info from "./Info";
 import "./style.scss";
 

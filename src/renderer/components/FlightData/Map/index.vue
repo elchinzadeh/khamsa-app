@@ -63,65 +63,68 @@ export default {
         };
     },
     created() {
-        Vue.prototype.$map = null;
+        Vue.prototype.$flightDataMap = null;
     },
     mounted() {
         this.$store.dispatch("setMapInitialCoordinates");
     },
     methods: {
         mapIsLoaded(event) {
-            this.$map = event.map;
-            this.$map.loadImage(this.droneIconSource, (err, image) => {
-                this.$map.addImage("drone", image);
-                this.$map.addSource("drone", {
-                    type: "geojson",
-                    data: this.dronePattern
-                });
-                this.$map.addLayer({
-                    id: "drone",
-                    type: "symbol",
-                    source: "drone",
-                    layout: {
-                        "icon-image": "drone",
-                        "icon-size": 0.25,
-                        "icon-rotate": 0
-                    }
-                });
-            });
+            this.$flightDataMap = event.map;
+            this.$flightDataMap.loadImage(
+                this.droneIconSource,
+                (err, image) => {
+                    this.$flightDataMap.addImage("drone", image);
+                    this.$flightDataMap.addSource("drone", {
+                        type: "geojson",
+                        data: this.dronePattern
+                    });
+                    this.$flightDataMap.addLayer({
+                        id: "drone",
+                        type: "symbol",
+                        source: "drone",
+                        layout: {
+                            "icon-image": "drone",
+                            "icon-size": 0.25,
+                            "icon-rotate": 0
+                        }
+                    });
+                }
+            );
 
-            this.$map.dragRotate.disable();
-            this.$map.touchZoomRotate.disableRotation();
+            this.$flightDataMap.dragRotate.disable();
+            this.$flightDataMap.touchZoomRotate.disableRotation();
 
-            this.$map.addSource(this.dronePath.id, {
+            this.$flightDataMap.addSource(this.dronePath.id, {
                 type: "geojson",
                 data: this.dronePath
             });
-            this.$map.addLayer($points_extrusion(this.dronePath.id));
-            this.$map.jumpTo({
+            this.$flightDataMap.addLayer($points_extrusion(this.dronePath.id));
+            this.$flightDataMap.jumpTo({
                 center: this.initialCoordinates,
                 zoom: this.initialZoomLevel
             });
 
             // Mouse enter
-            this.$map.on("mouseenter", "points-extrusion", event => {
-                this.$map.getCanvas().style.cursor = "pointer";
+            this.$flightDataMap.on("mouseenter", "points-extrusion", event => {
+                this.$flightDataMap.getCanvas().style.cursor = "pointer";
                 let coordinates = event.lngLat.wrap();
                 let description = this.prepareDescription(coordinates);
 
                 this.popup
                     .setLngLat([coordinates.lng, coordinates.lat])
                     .setHTML(description)
-                    .addTo(this.$map);
+                    .addTo(this.$flightDataMap);
             });
 
             // Mouse leave
-            this.$map.on("mouseleave", "points-extrusion", () => {
-                this.$map.getCanvas().style.cursor = "";
+            this.$flightDataMap.on("mouseleave", "points-extrusion", () => {
+                this.$flightDataMap.getCanvas().style.cursor = "";
                 this.popup.remove();
             });
 
             // Context menu
-            this.$map.on("contextmenu", this.handleContextMenu);
+            this.$flightDataMap.on("contextmenu", this.handleContextMenu);
 
             this.$Bus.$on("telemetry_data", telemetry => {
                 let keys = Object.keys(telemetry);
@@ -141,19 +144,23 @@ export default {
                 this.$store.dispatch("addDroneTrajectory", coordinates);
 
                 // Drone path
-                this.$map.getSource(this.dronePath.id).setData(this.dronePath);
+                this.$flightDataMap
+                    .getSource(this.dronePath.id)
+                    .setData(this.dronePath);
 
-                this.$map.getSource("drone").setData(this.dronePattern);
+                this.$flightDataMap
+                    .getSource("drone")
+                    .setData(this.dronePattern);
 
                 // Drone rotation
-                this.$map.setLayoutProperty(
+                this.$flightDataMap.setLayoutProperty(
                     "drone",
                     "icon-rotate",
                     telemetry.yaw_deg + 90
                 );
 
                 // Pan to drone
-                this.$map.panTo(coordinates);
+                this.$flightDataMap.panTo(coordinates);
 
                 if (!this.droneInitialLocation) {
                     this.droneInitialLocation = coordinates;
@@ -164,7 +171,10 @@ export default {
             });
 
             // Custom map controls
-            this.$map.addControl(new ClearScreenControl(), "top-left");
+            this.$flightDataMap.addControl(
+                new ClearScreenControl(),
+                "top-left"
+            );
         },
         prepareDescription(coordinates) {
             return `
@@ -202,6 +212,13 @@ export default {
         },
         initialCoordinates() {
             return this.$store.state.flightData.initialCoordinates;
+        }
+    },
+    watch: {
+        $route(to) {
+            if (to.name === "flightData") {
+                this.$flightDataMap.resize();
+            }
         }
     }
 };

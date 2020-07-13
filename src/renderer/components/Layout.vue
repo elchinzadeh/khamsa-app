@@ -1,12 +1,12 @@
 <template>
-	<fragment>
-		<Header />
-		<div class="layout">
-			<keep-alive>
-				<router-view />
-			</keep-alive>
-		</div>
-	</fragment>
+    <fragment>
+        <Header />
+        <div class="layout" ref="layout">
+            <keep-alive>
+                <router-view />
+            </keep-alive>
+        </div>
+    </fragment>
 </template>
 
 <script>
@@ -14,10 +14,10 @@ import Header from "@/components/Header";
 import { loading } from "@/core/popups.js";
 
 export default {
-	name: "Layout",
-	components: {
-		Header,
-	},
+    name: "Layout",
+    components: {
+        Header
+    }
 };
 </script>
 

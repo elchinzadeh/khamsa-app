@@ -1,44 +1,53 @@
 <template>
-    <div class="map">
-        <MglMap :accessToken="mapToken" :mapStyle="mapStyle" @load="onMapLoaded">
-            <!-- Navigation Control -->
-            <MglNavigationControl position="top-right" />
+    <VueResizable
+        fitParent
+        :active="['b']"
+        :minHeight="resizableMinHeight"
+        :maxHeight="resizableMaxHeight"
+        width="100%"
+        @resize:end="onEnd"
+    >
+        <div class="map">
+            <MglMap :accessToken="mapToken" :mapStyle="mapStyle" @load="onMapLoaded">
+                <!-- Navigation Control -->
+                <MglNavigationControl position="top-right" />
 
-            <!-- Marker -->
-            <MglMarker
-                v-for="(point, index) in points"
-                :key="index"
-                :coordinates="[point.coordinates.longitude, point.coordinates.latitude]"
-                color="blue"
-                anchor="bottom"
-                draggable
-                @dragend="pointDragged({ ...$event }, index)"
-            >
-                <template slot="marker">
-                    <CustomMarker
-                        :text="index + 1"
-                        :data-index="index"
-                        @click="pointClicked($event, index)"
-                        @dblclick="pointDblclicked($event, index)"
-                    />
-                </template>
-            </MglMarker>
+                <!-- Marker -->
+                <MglMarker
+                    v-for="(point, index) in points"
+                    :key="index"
+                    :coordinates="[point.coordinates.longitude, point.coordinates.latitude]"
+                    color="blue"
+                    anchor="bottom"
+                    draggable
+                    @dragend="pointDragged({ ...$event }, index)"
+                >
+                    <template slot="marker">
+                        <CustomMarker
+                            :text="index + 1"
+                            :data-index="index"
+                            @click="pointClicked($event, index)"
+                            @dblclick="pointDblclicked($event, index)"
+                        />
+                    </template>
+                </MglMarker>
 
-            <!-- GeoJSON Layer -->
-            <MglGeojsonLayer
-                :sourceId="geoJsonSource.data.id"
-                :source="geoJsonSource"
-                layerId="somethingSomething"
-                :layer="geoJsonLayer"
-            />
-        </MglMap>
+                <!-- GeoJSON Layer -->
+                <MglGeojsonLayer
+                    :sourceId="geoJsonSource.data.id"
+                    :source="geoJsonSource"
+                    layerId="somethingSomething"
+                    :layer="geoJsonLayer"
+                />
+            </MglMap>
 
-        <!-- Context menu -->
-        <ContextMenu ref="context" />
+            <!-- Context menu -->
+            <ContextMenu ref="context" />
 
-        <!-- Edit point -->
-        <EditPoint :pointIndex="editablePointIndex" />
-    </div>
+            <!-- Edit point -->
+            <EditPoint :pointIndex="editablePointIndex" />
+        </div>
+    </VueResizable>
 </template>
 
 <script>
@@ -50,6 +59,7 @@ import {
     MglMarker,
     MglGeojsonLayer
 } from "vue-mapbox";
+import VueResizable from "vue-resizable";
 
 import { MAPBOX_TOKEN, MAPBOX_STYLE_MONOCHROME } from "@/core/constants.js";
 import { swal } from "@/core/popups.js";
@@ -68,11 +78,16 @@ export default {
         MglGeojsonLayer,
         CustomMarker: Marker,
         ContextMenu,
-        EditPoint
+        EditPoint,
+        VueResizable
     },
     data() {
         return {
-            editablePointIndex: null
+            editablePointIndex: null,
+            resizable: {
+                minHeightPercent: 0,
+                maxHeightPercent: 75
+            }
         };
     },
     created() {
@@ -144,6 +159,9 @@ export default {
                 ...values
             };
             this.$store.dispatch("updatePoint", data);
+        },
+        onEnd() {
+            this.$flightPlanMap.resize();
         }
     },
     computed: {
@@ -166,6 +184,18 @@ export default {
         },
         droneInitialLocation() {
             return this.$store.state.flightData.droneInitialLocation;
+        },
+        resizableMinHeight() {
+            return (
+                (window.outerHeight - 80) *
+                (this.resizable.minHeightPercent / 100)
+            );
+        },
+        resizableMaxHeight() {
+            return (
+                (window.outerHeight - 80) *
+                (this.resizable.maxHeightPercent / 100)
+            );
         }
     },
     watch: {
@@ -177,6 +207,11 @@ export default {
         },
         droneInitialLocation(coordinates) {
             this.$flightPlanMap.panTo(coordinates);
+        },
+        $route(to) {
+            if (to.name === "flightPlan") {
+                this.$flightPlanMap.resize();
+            }
         }
     }
 };
