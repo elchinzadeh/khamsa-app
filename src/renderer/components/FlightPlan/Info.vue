@@ -159,12 +159,11 @@ export default {
             this.$store.dispatch("deletePoint", index);
         },
         uploadMission() {
-            const body = [...this.points];
-
-            if (this.returnToLand) {
-                body.push(this.points[0]);
-                // deezer.com/en/track/883649052
-            }
+            const body = {
+                points: this.points,
+                rtl: this.returnToLand
+            };
+            // deezer.com/en/track/883649052
 
             API.uploadMission(body).then(response => {
                 this.$store.dispatch("setMissionUploaded", true);
