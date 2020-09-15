@@ -3,7 +3,10 @@
         <!-- Menu bar -->
         <div class="header__menu">
             <!-- Logo -->
-            <img src="@/assets/logo.svg" class="header__menu--logo" />
+            <img
+                src="@/assets/logo.svg"
+                class="header__menu--logo"
+            />
 
             <!-- Menu list -->
             <ul class="header__menu--list">
@@ -11,12 +14,16 @@
                     v-for="item in page.list"
                     :key="item.key"
                     :class="{
-						'list-item': true,
-						'list-item--active': page.active === item.key,
-					}"
+                        'list-item': true,
+                        'list-item--active': page.active === item.key,
+                    }"
                     @click="changePage(item.key)"
                 >
-                    <img :src="item.icon" :alt="item.name" class="list-item__icon" />
+                    <img
+                        :src="item.icon"
+                        :alt="item.name"
+                        class="list-item__icon"
+                    />
                     <span>{{ item.name }}</span>
                 </li>
             </ul>
@@ -25,13 +32,22 @@
 
             <!-- Control menu -->
             <ul class="header__events">
-                <li class="header__events--item" @click="collapse">
+                <li
+                    class="header__events--item"
+                    @click="collapse"
+                >
                     <img src="@/assets/frame/collapse.svg" />
                 </li>
-                <li class="header__events--item" @click="fullscreen">
+                <li
+                    class="header__events--item"
+                    @click="fullscreen"
+                >
                     <img src="@/assets/frame/fullscreen.svg" />
                 </li>
-                <li class="header__events--item" @click="close">
+                <li
+                    class="header__events--item"
+                    @click="close"
+                >
                     <img src="@/assets/frame/close.svg" />
                 </li>
             </ul>
@@ -41,32 +57,43 @@
         <div class="header__toolbar">
             <!-- Toobar list -->
             <transition name="toolbar__menu">
-                <div class="toolbar__menu" v-if="!expandSeachArea">
+                <div
+                    class="toolbar__menu"
+                    v-if="!expandSeachArea"
+                >
                     <ul class="toolbar__menu__list">
                         <li
                             class="list__item list__item--live"
                             :class="{
-								'list__item--flickering': isConnected,
-							}"
+                                'list__item--flickering': isConnected,
+                            }"
                         >
-                            <button @click="starting" class="item__default-content">
+                            <button
+                                @click="starting"
+                                class="item__default-content"
+                            >
                                 <span>Live</span>
                             </button>
 
-                            <button @click="stopping" class="item__hover-content">
+                            <button
+                                @click="stopping"
+                                class="item__hover-content"
+                            >
                                 <span>Stop</span>
                             </button>
                         </li>
 
                         <li class="list__item">
                             <MenuDropdown>
-                                Mode: {{ activeModeName }}
+                                Mode{{ flightMode ? ': ' + flightMode : '' }}
                                 <template slot="list">
                                     <li
                                         v-for="mode in mode.list"
                                         :key="mode.key"
                                         @click="changeMode(mode.key)"
-                                    >{{ mode.name }}</li>
+                                    >
+                                        {{ mode.name }}
+                                    </li>
                                 </template>
                             </MenuDropdown>
                         </li>
@@ -85,7 +112,10 @@
 
             <!-- Search bar -->
             <transition name="toolbar__search">
-                <ul class="toolbar__search" v-if="expandSeachArea">
+                <ul
+                    class="toolbar__search"
+                    v-if="expandSeachArea"
+                >
                     <li>
                         <span>Date range:&nbsp;&nbsp;&nbsp;</span>
                         <date-range-picker
@@ -98,10 +128,20 @@
                         ></date-range-picker>
                     </li>
                     <li>
-                        <button class="confirm" @click="search">Search</button>
+                        <button
+                            class="confirm"
+                            @click="search"
+                        >
+                            Search
+                        </button>
                     </li>
                     <li>
-                        <button class="cancel" @click="expandSeachArea = false">Cancel</button>
+                        <button
+                            class="cancel"
+                            @click="expandSeachArea = false"
+                        >
+                            Cancel
+                        </button>
                     </li>
                 </ul>
             </transition>
@@ -111,33 +151,32 @@
 
 <script>
 // Dependencies
-import { remote } from "electron";
-import DateRangePicker from "vue2-daterange-picker";
-import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
-import moment from "moment/src/moment.js";
-import axios from "axios";
+import { remote } from 'electron';
+import DateRangePicker from 'vue2-daterange-picker';
+import 'vue2-daterange-picker/dist/vue2-daterange-picker.css';
+import moment from 'moment/src/moment.js';
 
 // Utils
-import { WS_HOST } from "@/core/constants.js";
-import { $exit, $error } from "@/core/popup_options.js";
-import { swal, toast, loading } from "@/core/popups.js";
-import SocketService from "@/core/socket.js";
-import SocketFallback from "@/core/socket_fallback.js";
+import API from '@/api';
+import { WS_HOST } from '@/core/constants.js';
+import { $exit } from '@/core/popup_options.js';
+import { swal, toast, loading } from '@/core/popups.js';
+import SocketFallback from '@/core/socket_fallback.js';
 
 // Components
-import MenuDropdown from "../common/MenuDropdown";
-import FlightData from "./FlightData";
-import FlightPlan from "./FlightPlan";
+import MenuDropdown from '../common/MenuDropdown';
+import FlightData from './FlightData';
+import FlightPlan from './FlightPlan';
 
 // Styles
-import "./style.scss";
+import './style.scss';
 
 export default {
     components: {
         DateRangePicker,
         MenuDropdown,
         FlightData,
-        FlightPlan
+        FlightPlan,
     },
     data() {
         return {
@@ -152,56 +191,58 @@ export default {
                 endDate: moment()
                     .seconds(0)
                     .milliseconds(0)
-                    .toISOString()
+                    .toISOString(),
             },
             isDatePickerToggled: false,
             mode: {
                 list: [
                     {
-                        key: "guided",
-                        name: "Guided"
+                        key: 'GUIDED',
+                        name: 'Guided',
                     },
                     {
-                        key: "auto",
-                        name: "Auto"
+                        key: 'AUTO',
+                        name: 'Auto',
                     },
                     {
-                        key: "stabilize",
-                        name: "Stabilize"
+                        key: 'STABILIZE',
+                        name: 'Stabilize',
                     },
                     {
-                        key: "land",
-                        name: "Land"
-                    }
+                        key: 'LAND',
+                        name: 'Land',
+                    },
                 ],
-                selected: "auto"
             },
             page: {
                 list: [
                     {
-                        key: "flightData",
-                        name: "Flight data",
-                        icon: require("../../assets/icons/compass.svg")
+                        key: 'flightData',
+                        name: 'Flight data',
+                        icon: require('../../assets/icons/compass.svg'),
                     },
                     {
-                        key: "flightPlan",
-                        name: "Flight plan",
-                        icon: require("../../assets/icons/earth.svg")
-                    }
+                        key: 'flightPlan',
+                        name: 'Flight plan',
+                        icon: require('../../assets/icons/earth.svg'),
+                    },
                 ],
-                active: "flightData"
-            }
+                active: 'flightData',
+            },
         };
     },
     mounted() {
         this.page.active = this.$route.name;
+        this.$Bus.$on('telemetry_data', (telemetry) => {
+            this.flightMode = telemetry.flight_mode;
+        });
     },
     methods: {
         starting() {
             if (this.telemetrySocket.OPEN != null) {
                 return toast.fire({
-                    type: "warning",
-                    title: "Socket already connected"
+                    type: 'warning',
+                    title: 'Socket already connected',
                 });
             }
 
@@ -209,19 +250,19 @@ export default {
             loading.showLoading();
 
             // Reset initial coordinates of drone
-            this.$store.dispatch("setDroneInitialLocation", null);
+            this.$store.dispatch('setDroneInitialLocation', null);
 
             this.telemetrySocket = new WebSocket(`${WS_HOST}/telemetry`);
             console.log(`${WS_HOST}/telemetry`);
 
             let intervalCallsCount = 0;
-            let intervalId = setInterval(() => {
+            const intervalId = setInterval(() => {
                 intervalCallsCount++;
                 if (intervalCallsCount > 5) {
                     loading.close();
                     toast.fire({
-                        type: "error",
-                        title: "Can not connect with the server"
+                        type: 'error',
+                        title: 'Can not connect with the server',
                     });
                     this.telemetrySocket.close();
                     this.telemetrySocket = new SocketFallback();
@@ -232,18 +273,18 @@ export default {
                 if (this.telemetrySocket.OPEN == 1) {
                     loading.close();
                     toast.fire({
-                        type: "success",
-                        title: "Connected"
+                        type: 'success',
+                        title: 'Connected',
                     });
                     clearInterval(intervalId);
                     this.isConnected = true;
                 }
             }, 300);
 
-            this.telemetrySocket.onmessage = event => {
-                let parsedData = JSON.parse(event.data);
+            this.telemetrySocket.onmessage = (event) => {
+                const parsedData = JSON.parse(event.data);
                 // console.log({ parsedData });
-                this.$Bus.$emit("telemetry_data", parsedData);
+                this.$Bus.$emit('telemetry_data', parsedData);
             };
         },
         stopping() {
@@ -252,22 +293,22 @@ export default {
                 this.telemetrySocket = new SocketFallback();
                 this.isConnected = false;
                 return toast.fire({
-                    type: "success",
-                    title: "Socket connection successfully closed"
+                    type: 'success',
+                    title: 'Socket connection successfully closed',
                 });
             }
 
             return toast.fire({
-                type: "warning",
-                title: "There is not an existing connection"
+                type: 'warning',
+                title: 'There is not an existing connection',
             });
         },
         collapse() {
-            let window = remote.getCurrentWindow();
+            const window = remote.getCurrentWindow();
             window.minimize();
         },
         fullscreen() {
-            let window = remote.getCurrentWindow();
+            const window = remote.getCurrentWindow();
             if (!window.isMaximized()) {
                 window.maximize();
             } else {
@@ -275,8 +316,8 @@ export default {
             }
         },
         close() {
-            let window = remote.getCurrentWindow();
-            swal.fire($exit).then(result => {
+            const window = remote.getCurrentWindow();
+            swal.fire($exit).then((result) => {
                 if (result.value) {
                     window.close();
                 }
@@ -294,23 +335,30 @@ export default {
             // });
         },
         changeMode(key) {
-            // API call
-            this.mode.selected = key;
-            console.log({ key });
+            const body = { mode: key };
+            API.setMode(body);
         },
         changePage(key) {
             if (this.$route.name !== key) {
                 this.page.active = key;
-                this.$router.push({
-                    name: key
-                });
+                this.$router.push({ name: key });
             }
-        }
+        },
     },
     computed: {
         activeModeName() {
-            return this.mode.list.find(x => x.key === this.mode.selected).name;
-        }
-    }
+            return this.mode.list.find((x) => x.key === this.mode.selected).name;
+        },
+        flightMode: {
+            get() {
+                return this.$store.state.flightData.flightMode;
+            },
+            set(value) {
+                if (this.flightMode !== value) {
+                    this.$store.dispatch('setFlightMode', value);
+                }
+            },
+        },
+    },
 };
 </script>
