@@ -59,7 +59,11 @@ export default {
                     inputValue: 10
                 })
             ).then(({ value }) => {
-                API.takeoff()
+                const body = {
+                    altitude: Number(value)
+                }
+
+                API.takeoff(body)
                     .then(response => {
                         console.log("Takeoff");
                     })
@@ -76,6 +80,7 @@ export default {
     mounted() {
         this.$Bus.$on("telemetry_data", telemetry => {
             this.armStatus = telemetry.arm_status;
+            console.log(telemetry)
         });
     }
 };

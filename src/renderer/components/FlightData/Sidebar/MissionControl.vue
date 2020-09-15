@@ -5,10 +5,10 @@
 
         <!-- Actions -->
         <div class="actions">
-            <Button>Start</Button>
-            <Button>Stop</Button>
-            <Button>Pause</Button>
-            <Button>Continue</Button>
+            <Button @click="startMission">Start</Button>
+            <Button @click="pauseMission">Pause</Button>
+            <Button @click="abortMission">Abort</Button>
+            <Button @click="continueMission">Continue</Button>
         </div>
 
         <!-- Current Progress -->
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import API from '@/api';
 import { Button, ProgressBar, ProgressRing } from "@/components/common";
 
 export default {
@@ -32,6 +33,20 @@ export default {
         return {
             percent: 0
         };
+    },
+    methods: {
+        startMission(){
+            API.startMission()
+        },
+        pauseMission(){
+            API.pauseMission()
+        },
+        abortMission(){
+            API.abortMission()
+        },
+        continueMission(){
+            API.continueMission()
+        },
     }
 };
 </script>

@@ -11,8 +11,8 @@ export function disarm() {
 }
 
 // Takeoff
-export function takeoff() {
-	return _.get("/takeoff");
+export function takeoff(data) {
+	return _.post("/takeoff", data);
 }
 
 // Fly to here
@@ -30,6 +30,21 @@ export function startMission() {
 	return _.get("/mission/start");
 }
 
+// Pause mission
+export function pauseMission() {
+	return _.get("/mission/pause");
+}
+
+// Abort mission
+export function abortMission() {
+	return _.get("/mission/abort");
+}
+
+// Continue mission
+export function continueMission() {
+	return _.get("/mission/continue");
+}
+
 export default {
 	arm,
 	disarm,
@@ -37,4 +52,7 @@ export default {
 	flyToHere,
 	uploadMission,
 	startMission,
+	pauseMission,
+	abortMission,
+	continueMission
 };

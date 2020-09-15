@@ -22,7 +22,7 @@ const state = {
 		properties: {}
 	},
 	initialCoordinates: [49.83846502960421, 40.34346368003392],
-
+	flight_mode: null
 };
 
 const mutations = {
@@ -43,6 +43,9 @@ const mutations = {
 	SET_MAP_INITIAL_COORDINATES(state) {
 		state.dronePattern.geometry.coordinates = state.initialCoordinates
 	},
+	SET_FLIGHT_MODE(state) {
+		state.flight_mode = state
+	},
 };
 
 const actions = {
@@ -58,6 +61,9 @@ const actions = {
 	},
 	setMapInitialCoordinates({ commit }) {
 		commit("SET_MAP_INITIAL_COORDINATES");
+	},
+	setFlight_mode({ commit }, payload) {
+		commit("SET_FLIGHT_MODE", payload);
 	},
 };
 
