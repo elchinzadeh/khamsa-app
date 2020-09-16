@@ -2,26 +2,33 @@
     <fragment>
         <li
             class="list__item"
+            :class="{'list__item--deactive': !isLive}"
             v-if="!armStatus"
         >
-            <button @click="arm">
+            <button @click="isLive && arm">
                 <span>Arm</span>
             </button>
         </li>
         <li
             class="list__item"
+            :class="{'list__item--deactive': !isLive}"
             v-else
         >
-            <button @click="disarm">
+            <button @click="isLive && disarm">
                 <span>Disarm</span>
             </button>
         </li>
-        <li class="list__item">
-            <button @click="takeoff">
+        <li
+            class="list__item"
+            :class="{'list__item--deactive': !isLive}"
+        >
+            <button @click="isLive && takeoff">
                 <span>Takeoff</span>
             </button>
         </li>
-        <li class="list__item">
+        <li
+            class="list__item"
+        >
             <button @click="archive">Archive</button>
         </li>
     </fragment>
@@ -83,6 +90,11 @@ export default {
         this.$Bus.$on('telemetry_data', (telemetry) => {
             this.armStatus = telemetry.arm_status;
         });
+    },
+    computed: {
+        isLive() {
+            return this.$store.state.general.isLive;
+        },
     },
 };
 </script>

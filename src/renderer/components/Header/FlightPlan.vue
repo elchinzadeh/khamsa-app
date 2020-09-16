@@ -2,8 +2,8 @@
     <fragment>
         <li
             :class="{
-            'list__item': true,
-            'list__item--deactive': !missionUploded
+                'list__item': true,
+                'list__item--deactive': !missionUploded && !isLive
             }"
         >
             <button @click="startMission">Start mission</button>
@@ -12,28 +12,31 @@
 </template>
 
 <script>
-import API from "@/api";
-import { toast } from "@/core/popups";
+import API from '@/api';
+import { toast } from '@/core/popups';
 
 export default {
-    name: "FlightPlanHeader",
+    name: 'FlightPlanHeader',
     methods: {
         startMission() {
             // watch?v=ML1nMEcJdP0
             if (this.missionUploded) {
-                API.startMission().then(response => {
+                API.startMission().then((response) => {
                     toast.fire({
-                        type: "success",
-                        title: "Mission started"
+                        type: 'success',
+                        title: 'Mission started',
                     });
                 });
             }
-        }
+        },
     },
     computed: {
         missionUploded() {
             return this.$store.state.flightPlan.missionUploaded;
-        }
-    }
+        },
+        isLive() {
+            return this.$store.state.general.isLive;
+        },
+    },
 };
 </script>

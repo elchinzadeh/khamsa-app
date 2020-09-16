@@ -62,10 +62,11 @@
                     v-if="!expandSeachArea"
                 >
                     <ul class="toolbar__menu__list">
+                        <!-- Live / Stop -->
                         <li
                             class="list__item list__item--live"
                             :class="{
-                                'list__item--flickering': isConnected,
+                                'list__item--flickering': isLive,
                             }"
                         >
                             <button
@@ -83,7 +84,11 @@
                             </button>
                         </li>
 
-                        <li class="list__item">
+                        <!-- Mode -->
+                        <li
+                            class="list__item"
+                            :class="{'list__item--deactive': !isLive}"
+                        >
                             <MenuDropdown>
                                 Mode{{ flightMode ? ': ' + flightMode : '' }}
                                 <template slot="list">
@@ -181,7 +186,6 @@ export default {
     data() {
         return {
             telemetrySocket: new SocketFallback(),
-            isConnected: false,
             expandSeachArea: false,
             dateRange: {
                 startDate: moment()
@@ -267,7 +271,7 @@ export default {
                     this.telemetrySocket.close();
                     this.telemetrySocket = new SocketFallback();
                     clearInterval(intervalId);
-                    this.isConnected = false;
+                    this.isLive = false;
                 }
 
                 if (this.telemetrySocket.OPEN == 1) {
@@ -277,7 +281,7 @@ export default {
                         title: 'Connected',
                     });
                     clearInterval(intervalId);
-                    this.isConnected = true;
+                    this.isLive = true;
                 }
             }, 300);
 
@@ -291,7 +295,7 @@ export default {
             if (this.telemetrySocket.OPEN == 1) {
                 this.telemetrySocket.close();
                 this.telemetrySocket = new SocketFallback();
-                this.isConnected = false;
+                this.isLive = false;
                 return toast.fire({
                     type: 'success',
                     title: 'Socket connection successfully closed',
@@ -348,6 +352,14 @@ export default {
     computed: {
         activeModeName() {
             return this.mode.list.find((x) => x.key === this.mode.selected).name;
+        },
+        isLive: {
+            get() {
+                return this.$store.state.general.isLive;
+            },
+            set(value) {
+                this.$store.dispatch('setIsLive', value);
+            },
         },
         flightMode: {
             get() {

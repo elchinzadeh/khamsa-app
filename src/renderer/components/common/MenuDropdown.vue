@@ -1,5 +1,8 @@
 <template>
-    <button class="dropdown" @click="toggle">
+    <button
+        class="dropdown"
+        @click="disabled || toggle "
+    >
         <span class="dropdown__title">
             <slot />
         </span>
@@ -14,20 +17,25 @@
 
 <script>
 export default {
-    name: "MenuDropdown",
+    name: 'MenuDropdown',
+    props: {
+        disabled: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
+    },
     data() {
-        return {
-            open: false,
-        };
+        return { open: false };
     },
     methods: {
         toggle() {
             this.open = !this.open;
 
             if (this.open) {
-                document.addEventListener("click", this.clickEvent);
+                document.addEventListener('click', this.clickEvent);
             } else {
-                document.removeEventListener("click", this.clickEvent);
+                document.removeEventListener('click', this.clickEvent);
             }
         },
         clickEvent(event) {
