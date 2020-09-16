@@ -2,19 +2,35 @@
     <div>
         <VueContext ref="menu">
             <li>
-                <a href="#" @click="addPoint('waypoint')">
+                <a
+                    href="#"
+                    @click="addPoint('waypoint')"
+                >
                     Waypoint
                 </a>
-                <a href="#" @click="addPoint('land')">
+                <a
+                    href="#"
+                    @click="addPoint('land')"
+                >
                     Land
                 </a>
-                <a href="#" @click="addPoint('takeoff')">
+                <a
+                    href="#"
+                    @click="addPoint('takeoff')"
+                >
                     Takeoff
                 </a>
-                <a href="#" v-if="markerIndex !== null" @click="deletePoint">
+                <a
+                    href="#"
+                    v-if="markerIndex !== null"
+                    @click="deletePoint"
+                >
                     Delete
                 </a>
-                <a href="#" @click="clearMission">
+                <a
+                    href="#"
+                    @click="clearMission"
+                >
                     Clear mission
                 </a>
             </li>
@@ -23,15 +39,12 @@
 </template>
 
 <script>
-import { VueContext } from "vue-context";
-import axios from "axios";
-import "@/styles/components/contextMenu.scss";
+import { VueContext } from 'vue-context';
+import '@/styles/components/contextMenu.scss';
 
 export default {
-    name: "MapContextMenu",
-    components: {
-        VueContext,
-    },
+    name: 'MapContextMenu',
+    components: { VueContext },
     data() {
         return {
             latitude: null,
@@ -47,8 +60,11 @@ export default {
 
             // If clicked on marker
             this.markerIndex = null;
-            const [isMarker, markerIndex] = this.detectMarker(
-                originalEvent.path
+            const [
+                isMarker,
+                markerIndex,
+            ] = this.detectMarker(
+                originalEvent.path,
             );
 
             if (isMarker) {
@@ -63,31 +79,46 @@ export default {
                     longitude: this.longitude,
                 },
             };
-            this.$store.dispatch("addPoint", payload);
+
+            const initialLocation = this.$store.state.flightData.droneInitialLocation;
+            if (this.points.length === 0 && initialLocation) {
+                payload.coordinates.longitude = initialLocation[0];
+                payload.coordinates.latitude = initialLocation[1];
+            }
+
+            this.$store.dispatch('addPoint', payload);
         },
         deletePoint() {
-            this.$store.dispatch("deletePoint", this.markerIndex);
+            this.$store.dispatch('deletePoint', this.markerIndex);
         },
         clearMission() {
-            this.$store.dispatch("deleteAllPoints");
+            this.$store.dispatch('deleteAllPoints');
         },
         detectMarker(elements) {
             let isMarker = false;
             let index = null;
 
             for (const element of elements) {
-                isMarker = Object.values(element.classList).includes("marker");
+                isMarker = Object.values(element.classList).includes('marker');
 
                 if (isMarker) {
                     index = element.dataset.index;
                 }
 
-                if (element.nodeName === "HTML" || isMarker) {
+                if (element.nodeName === 'HTML' || isMarker) {
                     break;
                 }
             }
 
-            return [isMarker, Number(index)];
+            return [
+                isMarker,
+                Number(index),
+            ];
+        },
+    },
+    computed: {
+        points() {
+            return this.$store.state.flightPlan.points;
         },
     },
 };

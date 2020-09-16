@@ -1,38 +1,36 @@
-import { Stats } from "fs";
-
 const state = {
     points: [],
     selectedPointIndex: null,
     dronePath: {
         geoJsonSource: {
-            type: "geojson",
+            type: 'geojson',
             data: {
-                id: "waypoints",
-                type: "Feature",
+                id: 'waypoints',
+                type: 'Feature',
                 geometry: {
-                    type: "LineString",
+                    type: 'LineString',
                     coordinates: [],
                 },
             },
         },
         geoJsonLayer: {
             // More info: https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#line
-            type: "line",
+            type: 'line',
             paint: {
-                "line-color": "#0000ff",
-                "line-width": 2,
+                'line-color': '#0000ff',
+                'line-width': 2,
             },
         },
     },
     missionUploaded: false,
-    returnToLand: false
+    returnToLand: false,
 };
 
 const mutations = {
     ADD_POINT(state, payload) {
         state.points.push({
             altitude: 0,
-            command: "waypoint",
+            command: 'waypoint',
             delay: 0,
             ...payload,
         });
@@ -80,42 +78,42 @@ const mutations = {
     },
     SET_RETURN_TO_LAND(state, status) {
         state.returnToLand = status;
-    }
+    },
 };
 
 const actions = {
     addPoint({ commit }, payload) {
-        commit("ADD_POINT", payload);
-        commit("REMOVE_SELECTED_POINT");
+        commit('ADD_POINT', payload);
+        commit('REMOVE_SELECTED_POINT');
     },
     updatePoint({ commit }, payload) {
-        commit("UPDATE_POINT", payload);
+        commit('UPDATE_POINT', payload);
     },
     deletePoint({ commit }, payload) {
-        commit("DELETE_POINT", payload);
+        commit('DELETE_POINT', payload);
         if (state.selectedPointIndex === payload) {
-            commit("REMOVE_SELECTED_POINT");
+            commit('REMOVE_SELECTED_POINT');
         }
     },
     deleteAllPoints({ commit }) {
-        commit("DELETE_ALL_POINTS");
-        commit("REMOVE_SELECTED_POINT");
+        commit('DELETE_ALL_POINTS');
+        commit('REMOVE_SELECTED_POINT');
     },
     selectPoint({ commit }, payload) {
-        commit("SELECT_POINT", payload);
+        commit('SELECT_POINT', payload);
     },
     removeSelectedPoint({ commit }) {
-        commit("REMOVE_SELECTED_POINT");
+        commit('REMOVE_SELECTED_POINT');
     },
     setDronePathCoordinates({ commit }, payload) {
-        commit('SET_DRONE_PATH_COORDINATES', payload)
+        commit('SET_DRONE_PATH_COORDINATES', payload);
     },
     setMissionUploaded({ commit }, payload) {
-        commit('SET_MISSION_UPLOADED', payload)
+        commit('SET_MISSION_UPLOADED', payload);
     },
     setReturnToLand({ commit }, payload) {
-        commit('SET_RETURN_TO_LAND', payload)
-    }
+        commit('SET_RETURN_TO_LAND', payload);
+    },
 };
 
 export default {
