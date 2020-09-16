@@ -2,7 +2,7 @@
     <button
         class="button"
         :class="{'button--disabled': disabled}"
-        @click="disabled && onClick"
+        @click="!disabled && onClick($event)"
         :disabled="disabled"
     >
         <slot />

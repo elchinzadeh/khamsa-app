@@ -1,0 +1,9 @@
+.flight-data-context-menu {
+    .context-menu{
+        &__item {
+            &--disabled {
+                opacity: 0.5;
+            }        
+        }
+    }
+}

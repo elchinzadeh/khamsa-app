@@ -1,7 +1,7 @@
 <template>
     <button
         class="dropdown"
-        @click="disabled || toggle "
+        @click="!disabled && toggle()"
     >
         <span class="dropdown__title">
             <slot />

@@ -89,7 +89,7 @@
                             class="list__item"
                             :class="{'list__item--deactive': !isLive}"
                         >
-                            <MenuDropdown>
+                            <MenuDropdown :disabled="!isLive">
                                 Mode{{ flightMode ? ': ' + flightMode : '' }}
                                 <template slot="list">
                                     <li

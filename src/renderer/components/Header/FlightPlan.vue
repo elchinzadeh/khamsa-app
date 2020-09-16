@@ -6,7 +6,7 @@
                 'list__item--deactive': !missionUploded && !isLive
             }"
         >
-            <button @click="startMission">Start mission</button>
+            <button @click="isLive && startMission()">Start mission</button>
         </li>
     </fragment>
 </template>

@@ -3,13 +3,25 @@
 .v-context {
     padding: 0;
     background-color: $context-menu-bg;
-    li a {
-        font-size: 1.2rem;
-        color: $white;
-
-        &:hover {
+    li {
+        a {
+            font-size: 1.2rem;
             color: $white;
-            background-color: $context-menu-bg-hover;
+
+            &:hover {
+                color: $white;
+                background-color: $context-menu-bg-hover;
+            }
+        }
+
+        &.disabled a{
+            opacity: 0.5;
+            cursor: default;
+
+            &:hover {
+                color: $white;
+                background-color: $context-menu-bg;
+            }
         }
     }
 }
