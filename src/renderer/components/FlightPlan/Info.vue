@@ -3,10 +3,19 @@
         <!-- Action bar -->
         <div class="action-bar">
             <div class="action-bar__left">
-                <Checkbox v-model="returnToLand" label="Return to land" />
+                <Checkbox
+                    v-model="returnToLand"
+                    label="Return to launch"
+                    :disabled="!isLive"
+                />
             </div>
             <div class="action-bar__right">
-                <Button @click="uploadMission">Upload mission</Button>
+                <Button
+                    @click="uploadMission"
+                    :disabled="!isLive"
+                >
+                    Upload mission
+                </Button>
             </div>
         </div>
 
@@ -39,7 +48,9 @@
                                 v-for="command in commands"
                                 :key="command.key"
                                 :value="command.key"
-                            >{{ command.name }}</option>
+                            >
+                                {{ command.name }}
+                            </option>
                         </select>
                         <!-- {{ point.command }} -->
                     </td>
@@ -82,15 +93,24 @@
                         />
                     </td>
                     <td class="cell">
-                        <button class="btn" @click="deletePoint(index)">
-                            <TrashIcon size="14" title="Delete" />
+                        <button
+                            class="btn"
+                            @click="deletePoint(index)"
+                        >
+                            <TrashIcon
+                                size="14"
+                                title="Delete"
+                            />
                         </button>
                     </td>
                 </tr>
 
                 <!-- Empty text -->
                 <tr v-if="!points.length">
-                    <td class="cell cell--text cell--empty" colspan="7">
+                    <td
+                        class="cell cell--text cell--empty"
+                        colspan="7"
+                    >
                         There is no data to show. Click on the map to add
                         waypoints.
                     </td>
@@ -101,78 +121,78 @@
 </template>
 
 <script>
-import { TrashIcon } from "vue-feather-icons";
-import API from "@/api";
-import { toast } from "@/core/popups";
-import { Button, Checkbox } from "@/components/common";
+import { TrashIcon } from 'vue-feather-icons';
+import API from '@/api';
+import { toast } from '@/core/popups';
+import { Button, Checkbox } from '@/components/common';
 
 export default {
-    name: "FlightPlanInfo",
+    name: 'FlightPlanInfo',
     components: {
         TrashIcon,
         Button,
-        Checkbox
+        Checkbox,
     },
     data() {
         return {
             commands: [
                 {
-                    key: "waypoint",
-                    name: "Waypoint"
+                    key: 'waypoint',
+                    name: 'Waypoint',
                 },
                 {
-                    key: "takeoff",
-                    name: "Takeoff"
+                    key: 'takeoff',
+                    name: 'Takeoff',
                 },
                 {
-                    key: "land",
-                    name: "Land"
-                }
-            ]
+                    key: 'land',
+                    name: 'Land',
+                },
+            ],
         };
     },
     methods: {
         commandChange(e, index) {
             const payload = {
                 index,
-                command: e.target.value
+                command: e.target.value,
             };
-            this.$store.dispatch("updatePoint", payload);
-            this.$emit("insertWaypoints");
+            this.$store.dispatch('updatePoint', payload);
+            this.$emit('insertWaypoints');
         },
         inputChange(e) {
             const data = {};
             data.index = Number(e.target.dataset.index);
 
-            if (e.target.name.includes("coordinates")) {
-                const param = e.target.name.split(".")[1];
+            if (e.target.name.includes('coordinates')) {
+                const param = e.target.name.split('.')[1];
                 data.coordinates = {};
                 data.coordinates[param] = Number(e.target.value);
             } else {
                 data[e.target.name] = Number(e.target.value);
             }
 
-            this.$store.dispatch("updatePoint", data);
-            this.$emit("insertWaypoints");
+            this.$store.dispatch('updatePoint', data);
+            this.$emit('insertWaypoints');
         },
         deletePoint(index) {
-            this.$store.dispatch("deletePoint", index);
+            this.$store.dispatch('deletePoint', index);
         },
         uploadMission() {
             const body = {
                 points: this.points,
-                rtl: this.returnToLand
+                rtl: this.returnToLand,
             };
             // deezer.com/en/track/883649052
 
-            API.uploadMission(body).then(response => {
-                this.$store.dispatch("setMissionUploaded", true);
+            API.uploadMission(body).then((response) => {
+                this.$store.dispatch('setMissionUploaded', true);
                 toast.fire({
-                    type: "success",
-                    title: "Mission uploaded"
+                    type: 'success',
+                    title: 'Mission uploaded',
                 });
             });
-        }
+        },
     },
     computed: {
         points() {
@@ -186,9 +206,12 @@ export default {
                 return this.$store.state.flightPlan.returnToLand;
             },
             set(value) {
-                this.$store.dispatch("setReturnToLand", value);
-            }
-        }
-    }
+                this.$store.dispatch('setReturnToLand', value);
+            },
+        },
+        isLive() {
+            return this.$store.state.general.isLive;
+        },
+    },
 };
 </script>

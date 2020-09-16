@@ -1,27 +1,39 @@
 <template>
-    <label class="checkbox">
+    <label
+        class="checkbox"
+        :class="{'checkbox--disabled': disabled}"
+    >
         <span class="checkbox__label">{{ label }}</span>
-        <input type="checkbox" v-model="model" />
+        <input
+            type="checkbox"
+            v-model="model"
+            :disabled="disabled"
+        />
         <span class="checkbox__mark" />
     </label>
 </template>
 
 <script>
-import "./style.scss";
+import './style.scss';
 
 export default {
-    name: "Checkbox",
+    name: 'Checkbox',
     props: {
         value: {
             required: false,
             type: Boolean,
-            default: false
+            default: false,
         },
         label: {
             required: false,
             type: String,
-            default: ""
-        }
+            default: '',
+        },
+        disabled: {
+            required: false,
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         model: {
@@ -29,9 +41,9 @@ export default {
                 return this.value;
             },
             set(value) {
-                this.$emit("input", value);
-            }
-        }
-    }
+                this.$emit('input', value);
+            },
+        },
+    },
 };
 </script>

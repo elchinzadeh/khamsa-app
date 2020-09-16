@@ -4,7 +4,12 @@
     color: $white;
     transition: all $transition-duration;
 
-    &:hover {
+    &--disabled {
+        cursor: default;
+        color: $gray-200;
+    }
+
+    &:not(.button--disabled):hover {
         background-color: $accent;
     }
 }

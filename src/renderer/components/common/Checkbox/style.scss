@@ -10,6 +10,11 @@
     -ms-user-select: none;
     user-select: none;
 
+    &--disabled {
+        cursor: default;  
+        opacity: 0.5;
+    }
+
     &__label {
         font-size: 1.4rem;
         margin-bottom: -0.3rem;

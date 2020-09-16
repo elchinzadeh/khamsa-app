@@ -5,48 +5,74 @@
 
         <!-- Actions -->
         <div class="actions">
-            <Button @click="startMission">Start</Button>
-            <Button @click="pauseMission">Pause</Button>
-            <Button @click="abortMission">Abort</Button>
-            <Button @click="continueMission">Continue</Button>
+            <Button
+                @click="startMission"
+                :disabled="!isLive"
+            >
+                Start
+            </Button>
+            <Button
+                @click="pauseMission"
+                :disabled="!isLive"
+            >
+                Pause
+            </Button>
+            <Button
+                @click="abortMission"
+                :disabled="!isLive"
+            >
+                Abort
+            </Button>
+            <Button
+                @click="continueMission"
+                :disabled="!isLive"
+            >
+                Continue
+            </Button>
         </div>
 
         <!-- Current Progress -->
         <div class="mission-progress">
-            <ProgressRing :strokeWidth="6" :percent="percent" />
+            <ProgressRing
+                :strokeWidth="6"
+                :percent="percent"
+            />
         </div>
     </div>
 </template>
 
 <script>
 import API from '@/api';
-import { Button, ProgressBar, ProgressRing } from "@/components/common";
+import { Button, ProgressBar, ProgressRing } from '@/components/common';
 
 export default {
-    name: "MissionControl",
+    name: 'MissionControl',
     components: {
         Button,
         ProgressBar,
-        ProgressRing
+        ProgressRing,
     },
     data() {
-        return {
-            percent: 0
-        };
+        return { percent: 0 };
     },
     methods: {
-        startMission(){
-            API.startMission()
+        startMission() {
+            API.startMission();
         },
-        pauseMission(){
-            API.pauseMission()
+        pauseMission() {
+            API.pauseMission();
         },
-        abortMission(){
-            API.abortMission()
+        abortMission() {
+            API.abortMission();
         },
-        continueMission(){
-            API.continueMission()
+        continueMission() {
+            API.continueMission();
         },
-    }
+    },
+    computed: {
+        isLive() {
+            return this.$store.state.general.isLive;
+        },
+    },
 };
 </script>

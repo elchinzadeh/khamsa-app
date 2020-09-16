@@ -5,7 +5,7 @@
             :class="{'list__item--deactive': !isLive}"
             v-if="!armStatus"
         >
-            <button @click="isLive && arm">
+            <button @click="isLive && arm()">
                 <span>Arm</span>
             </button>
         </li>
@@ -14,7 +14,7 @@
             :class="{'list__item--deactive': !isLive}"
             v-else
         >
-            <button @click="isLive && disarm">
+            <button @click="isLive && disarm()">
                 <span>Disarm</span>
             </button>
         </li>
@@ -22,7 +22,7 @@
             class="list__item"
             :class="{'list__item--deactive': !isLive}"
         >
-            <button @click="isLive && takeoff">
+            <button @click="isLive && takeoff()">
                 <span>Takeoff</span>
             </button>
         </li>

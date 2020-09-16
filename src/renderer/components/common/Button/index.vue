@@ -1,18 +1,30 @@
 <template>
-    <button class="button" @click="onClick">
+    <button
+        class="button"
+        :class="{'button--disabled': disabled}"
+        @click="disabled && onClick"
+        :disabled="disabled"
+    >
         <slot />
     </button>
 </template>
 
 <script>
-import "./style.scss";
+import './style.scss';
 
 export default {
-    name: "Button",
+    name: 'Button',
+    props: {
+        disabled: {
+            required: true,
+            type: Boolean,
+            default: false,
+        },
+    },
     methods: {
         onClick(e) {
-            this.$emit("click", e);
-        }
-    }
+            this.$emit('click', e);
+        },
+    },
 };
 </script>
