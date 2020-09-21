@@ -82,11 +82,28 @@ const mutations = {
 };
 
 const actions = {
-    addPoint({ commit }, payload) {
+    addPoint({ commit, rootState }, payload) {
+        if (state.points.length === 0) {
+            if (payload.command === 'takeoff') {
+                const droneCurrentLocation = rootState.flightData.droneCurrentLocation;
+                payload.coordinates.longitude = droneCurrentLocation[0];
+                payload.coordinates.latitude = droneCurrentLocation[1];
+            }
+        }
+
         commit('ADD_POINT', payload);
         commit('REMOVE_SELECTED_POINT');
     },
-    updatePoint({ commit }, payload) {
+    updatePoint({ commit, rootState }, payload) {
+        if (payload.index === 0) {
+            if (payload.command === 'takeoff') {
+                const droneCurrentLocation = rootState.flightData.droneCurrentLocation;
+                payload.coordinates = {};
+                payload.coordinates.longitude = droneCurrentLocation[0];
+                payload.coordinates.latitude = droneCurrentLocation[1];
+            }
+        }
+
         commit('UPDATE_POINT', payload);
     },
     deletePoint({ commit }, payload) {

@@ -15,6 +15,11 @@ export function takeoff(data) {
     return _.post('/takeoff', data);
 }
 
+// Change altitude
+export function changeAltitude(data) {
+    return _.post('/takeoff/changeAlt', data);
+}
+
 // Fly to here
 export function flyToHere(data) {
     return _.post('/flyToHere', data);
@@ -54,6 +59,7 @@ export default {
     arm,
     disarm,
     takeoff,
+    changeAltitude,
     flyToHere,
     uploadMission,
     startMission,
