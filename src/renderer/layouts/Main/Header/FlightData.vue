@@ -21,7 +21,7 @@
         <li
             class="list__item"
             :class="{'list__item--deactive': !isLive}"
-            v-if="!armStatus"
+            v-if="!showChangeAltitude"
         >
             <button @click="isLive && takeoff()">
                 <span>Takeoff</span>
@@ -30,7 +30,7 @@
         <li
             class="list__item"
             :class="{'list__item--deactive': !isLive}"
-            v-if="armStatus"
+            v-if="showChangeAltitude"
         >
             <button @click="isLive && changeAltitude()">
                 <span>Change altitude</span>
@@ -52,7 +52,10 @@ import { $number_input } from '@/core/popup_options.js';
 export default {
     name: 'FlightDataHeader',
     data() {
-        return { armStatus: false };
+        return {
+            armStatus: false,
+            altitude: 0,
+        };
     },
     methods: {
         arm() {
@@ -109,11 +112,15 @@ export default {
     mounted() {
         this.$Bus.$on('telemetry_data', (telemetry) => {
             this.armStatus = telemetry.arm_status;
+            this.altitude = telemetry.relative_altitude_m;
         });
     },
     computed: {
         isLive() {
             return this.$store.state.general.isLive;
+        },
+        showChangeAltitude() {
+            return Math.round(this.altitude) > 0 && this.armStatus;
         },
     },
 };
