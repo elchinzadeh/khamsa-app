@@ -98,7 +98,7 @@ export default {
                     inputValue: 10,
                 }),
             ).then(({ value }) => {
-                const data = { alt: value };
+                const data = { altitude: value };
                 API.changeAltitude(data);
             });
         },

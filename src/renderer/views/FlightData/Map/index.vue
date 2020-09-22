@@ -16,13 +16,13 @@
                 v-for="(point, index) in points"
                 :key="index"
                 :coordinates="[point.coordinates.longitude, point.coordinates.latitude]"
-                color="blue"
                 anchor="bottom"
                 :draggable="false"
             >
                 <template slot="marker">
                     <CustomMarker
                         :text="index + 1"
+                        :color="point.command === 'takeoff' ? 'green' : 'blue'"
                         transparent
                     />
                 </template>

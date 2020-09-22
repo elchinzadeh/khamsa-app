@@ -63,6 +63,7 @@ export default {
                     inputValue: 10,
                 }),
             ).then(({ value }) => {
+                this.altitude = Number(value);
                 this.flyToHere();
             });
         },
