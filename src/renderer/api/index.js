@@ -12,7 +12,7 @@ export function disarm() {
 
 // Takeoff
 export function takeoff(data) {
-    return _.post('/takeoff', data);
+    return _.post('/takeoff/fromGround', data);
 }
 
 // Change altitude

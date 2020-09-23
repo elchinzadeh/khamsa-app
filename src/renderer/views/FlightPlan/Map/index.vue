@@ -202,15 +202,6 @@ export default {
         },
     },
     watch: {
-        points(points) {
-            const coordinates = this.points.map(({ coordinates }) => {
-                return [
-                    coordinates.longitude,
-                    coordinates.latitude,
-                ];
-            });
-            this.$store.dispatch('setDronePathCoordinates', coordinates);
-        },
         droneInitialLocation(coordinates) {
             this.$flightPlanMap.panTo(coordinates);
         },

@@ -11,10 +11,10 @@
         </li>
         <li
             class="list__item"
-            :class="{'list__item--deactive': !isLive}"
+            :class="{'list__item--deactive': !disarmIsActive}"
             v-else
         >
-            <button @click="isLive && disarm()">
+            <button @click="disarmIsActive && disarm()">
                 <span>Disarm</span>
             </button>
         </li>
@@ -121,6 +121,9 @@ export default {
         },
         showChangeAltitude() {
             return Math.round(this.altitude) > 0 && this.armStatus;
+        },
+        disarmIsActive() {
+            return Math.round(this.altitude) <= 0 && this.armStatus && this.isLive;
         },
     },
 };

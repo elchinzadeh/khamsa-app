@@ -82,7 +82,7 @@ const mutations = {
 };
 
 const actions = {
-    addPoint({ commit, rootState }, payload) {
+    addPoint({ commit, dispatch, rootState }, payload) {
         if (state.points.length === 0) {
             if (payload.command === 'takeoff') {
                 const droneCurrentLocation = rootState.flightData.droneCurrentLocation;
@@ -93,8 +93,10 @@ const actions = {
 
         commit('ADD_POINT', payload);
         commit('REMOVE_SELECTED_POINT');
+
+        dispatch('setDronePathCoordinates');
     },
-    updatePoint({ commit, rootState }, payload) {
+    updatePoint({ commit, dispatch, rootState }, payload) {
         if (payload.index === 0) {
             if (payload.command === 'takeoff') {
                 const droneCurrentLocation = rootState.flightData.droneCurrentLocation;
@@ -105,25 +107,50 @@ const actions = {
         }
 
         commit('UPDATE_POINT', payload);
+
+        dispatch('setDronePathCoordinates');
     },
-    deletePoint({ commit }, payload) {
+    deletePoint({ commit, dispatch }, payload) {
         commit('DELETE_POINT', payload);
         if (state.selectedPointIndex === payload) {
             commit('REMOVE_SELECTED_POINT');
         }
+
+        dispatch('setDronePathCoordinates');
     },
-    deleteAllPoints({ commit }) {
+    deleteAllPoints({ commit, dispatch }) {
         commit('DELETE_ALL_POINTS');
         commit('REMOVE_SELECTED_POINT');
+        dispatch('setDronePathCoordinates');
     },
     selectPoint({ commit }, payload) {
         commit('SELECT_POINT', payload);
     },
-    removeSelectedPoint({ commit }) {
+    removeSelectedPoint({ commit, dispatch }) {
         commit('REMOVE_SELECTED_POINT');
+        dispatch('setDronePathCoordinates');
     },
-    setDronePathCoordinates({ commit }, payload) {
-        commit('SET_DRONE_PATH_COORDINATES', payload);
+    setDronePathCoordinates({ commit }) {
+        let data = [];
+
+        state.points.forEach((point, index) => {
+            if (index === 0) {
+                data.push(point);
+            } else {
+                if (point.command !== 'takeoff') {
+                    data.push(point);
+                };
+            }
+        });
+
+        data = data.map(({ coordinates }) => {
+            return [
+                coordinates.longitude,
+                coordinates.latitude,
+            ];
+        });
+
+        commit('SET_DRONE_PATH_COORDINATES', data);
     },
     setMissionUploaded({ commit }, payload) {
         commit('SET_MISSION_UPLOADED', payload);

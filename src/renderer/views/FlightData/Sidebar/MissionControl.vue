@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar__mission-control">
         <!-- All progress -->
-        <ProgressBar :percent="70" />
+        <ProgressBar :percent="missionProgress" />
 
         <!-- Actions -->
         <div class="actions">
@@ -35,7 +35,8 @@
         <div class="mission-progress">
             <ProgressRing
                 :strokeWidth="6"
-                :percent="percent"
+                :percent="missionProgress"
+                :text="missionProgress >= 100 ? 'Completed' : null"
             />
         </div>
     </div>
@@ -72,6 +73,9 @@ export default {
     computed: {
         isLive() {
             return this.$store.state.general.isLive;
+        },
+        missionProgress() {
+            return this.$store.state.mission.progress.toFixed(0);
         },
     },
 };

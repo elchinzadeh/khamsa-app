@@ -1,6 +1,10 @@
 <template>
     <div>
-        <svg class="progress-ring" :height="size" :width="size">
+        <svg
+            class="progress-ring"
+            :height="size"
+            :width="size"
+        >
             <circle
                 class="progress-ring__background"
                 :stroke="backStrokeColor"
@@ -28,41 +32,59 @@
                 font-size="20px"
                 font-weight="500"
                 fill="#ffffff"
-            >{{ percent }}%</text>
+            >
+                {{ percent }}%
+            </text>
+            <text
+                x="50%"
+                y="65%"
+                dominant-baseline="middle"
+                text-anchor="middle"
+                font-size="12px"
+                font-weight="500"
+                fill="#ffffff"
+            >
+                {{ text }}
+            </text>
         </svg>
     </div>
 </template>
 
 <script>
-import "./style.scss";
+import './style.scss';
 
 export default {
-    name: "ProgressRing",
+    name: 'ProgressRing',
     props: {
         size: {
             required: false,
             type: Number,
-            default: 120
+            default: 120,
         },
         strokeWidth: {
             required: false,
             type: Number,
-            default: 4
+            default: 4,
         },
         strokeColor: {
             required: false,
             type: String,
-            default: "#009900"
+            default: '#009900',
         },
         backStrokeColor: {
             required: false,
             type: String,
-            default: "#3d3d3d"
+            default: '#3d3d3d',
         },
         percent: {
             required: true,
-            type: Number
-        }
+            type: Number,
+        },
+        text: {
+            required: false,
+            type: String,
+            default: '',
+        },
     },
     mounted() {
         this.$refs.circle.style.strokeDasharray = `${this.circumference} ${this.circumference}`;
@@ -75,7 +97,7 @@ export default {
             const offset =
                 this.circumference - (percent / 100) * this.circumference;
             this.$refs.circle.style.strokeDashoffset = offset;
-        }
+        },
     },
     computed: {
         radius() {
@@ -83,12 +105,12 @@ export default {
         },
         circumference() {
             return this.radius * 2 * Math.PI;
-        }
+        },
     },
     watch: {
         percent(value) {
             this.setProgress(value);
-        }
-    }
+        },
+    },
 };
 </script>

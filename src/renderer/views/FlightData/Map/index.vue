@@ -136,6 +136,7 @@ export default {
             this.$flightDataMap.on('contextmenu', this.handleContextMenu);
 
             this.$Bus.$on('telemetry_data', (telemetry) => {
+                console.log(telemetry);
                 const keys = Object.keys(telemetry);
                 if (
                     !keys.includes('latitude_deg') &&
@@ -177,6 +178,9 @@ export default {
 
                 // Drone's current location
                 this.droneCurrentLocation = coordinates;
+
+                // Mission progress
+                this.missionProgress = telemetry.mission_progress;
 
                 // See what your brother will do
                 // this.$forceUpdate();
@@ -232,6 +236,11 @@ export default {
         },
         initialCoordinates() {
             return this.$store.state.flightData.initialCoordinates;
+        },
+        missionProgress: {
+            set(value) {
+                this.$store.dispatch('setMissionProgress', value);
+            },
         },
     },
     watch: {
