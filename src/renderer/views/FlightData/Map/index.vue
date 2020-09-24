@@ -136,7 +136,6 @@ export default {
             this.$flightDataMap.on('contextmenu', this.handleContextMenu);
 
             this.$Bus.$on('telemetry_data', (telemetry) => {
-                console.log(telemetry);
                 const keys = Object.keys(telemetry);
                 if (
                     !keys.includes('latitude_deg') &&
@@ -238,6 +237,9 @@ export default {
             return this.$store.state.flightData.initialCoordinates;
         },
         missionProgress: {
+            get() {
+                return this.$store.state.mission.progress;
+            },
             set(value) {
                 this.$store.dispatch('setMissionProgress', value);
             },

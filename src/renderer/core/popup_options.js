@@ -2,14 +2,14 @@ export const $exit = {
     title: 'Are you want to exit?',
     type: 'question',
     showCancelButton: true,
-    confirmButtonText: 'Yes'
+    confirmButtonText: 'Yes',
 };
 
 export const $empty_result = {
     title: 'Bad query',
-    text: "There is no result for queried telemetry",
+    text: 'There is no result for queried telemetry',
     type: 'info',
-    showCancelButton: false
+    showCancelButton: false,
 };
 
 export const $error = (data = '') => {
@@ -17,7 +17,7 @@ export const $error = (data = '') => {
         title: 'Oops...',
         text: `${data}`,
         type: 'error',
-        showCancelButton: false
+        showCancelButton: false,
     };
 };
 
@@ -26,7 +26,7 @@ export const $connection_error = {
     title: 'The Internet things :(',
     text: 'No connection',
     showCancelButton: true,
-    confirmButtonText: 'Retry'
+    confirmButtonText: 'Retry',
 };
 
 export const $exception_message = (data) => {
@@ -34,19 +34,19 @@ export const $exception_message = (data) => {
         type: 'error',
         title: 'Something went wrong',
         text: `${data}`,
-        showCancelButton: false
+        showCancelButton: false,
     };
 };
 
 export const $number_input = ({ title = '', inputValue = 0 }) => {
     return {
         title,
-        input: "number",
+        input: 'number',
         inputValue,
-        inputValidator: value => {
+        inputValidator: (value) => {
             if (!value) {
-                return "You need to write something!";
+                return 'You need to write something!';
             }
-        }
+        },
     };
 };

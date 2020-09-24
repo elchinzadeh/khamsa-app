@@ -1,19 +1,23 @@
 <template>
     <div class="progress-bar">
-        <div class="progress-bar__progress" :style="`width: ${percent}%`" />
+        <div
+            class="progress-bar__progress"
+            :style="`width: ${percent}%`"
+        />
     </div>
 </template>
 
 <script>
-import "./style.scss";
+import './style.scss';
 
 export default {
-    name: "ProgressBar",
+    name: 'ProgressBar',
     props: {
         percent: {
             required: true,
-            type: Number
-        }
-    }
+            type: Number,
+            default: 0,
+        },
+    },
 };
 </script>

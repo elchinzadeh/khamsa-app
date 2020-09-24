@@ -22,7 +22,6 @@ const state = {
             },
         },
     },
-    missionUploaded: false,
     returnToLand: false,
 };
 
@@ -72,9 +71,6 @@ const mutations = {
     },
     SET_DRONE_PATH_COORDINATES(state, coordinates) {
         state.dronePath.geoJsonSource.data.geometry.coordinates = coordinates;
-    },
-    SET_MISSION_UPLOADED(state, status) {
-        state.missionUploaded = status;
     },
     SET_RETURN_TO_LAND(state, status) {
         state.returnToLand = status;
@@ -151,9 +147,6 @@ const actions = {
         });
 
         commit('SET_DRONE_PATH_COORDINATES', data);
-    },
-    setMissionUploaded({ commit }, payload) {
-        commit('SET_MISSION_UPLOADED', payload);
     },
     setReturnToLand({ commit }, payload) {
         commit('SET_RETURN_TO_LAND', payload);

@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { HTTP_HOST } from '@/core/constants.js';
 import { swal } from '@/core/popups.js';
+import { $exception_message } from '@/core/popup_options.js';
 
 console.log({ HTTP_HOST });
 
 const api = axios.create({
     baseURL: HTTP_HOST,
-    timeout: 10000,
+    timeout: 100000,
 });
 
 api.interceptors.response.use(

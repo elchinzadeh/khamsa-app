@@ -32,7 +32,7 @@ export default {
     },
     computed: {
         missionUploded() {
-            return this.$store.state.flightPlan.missionUploaded;
+            return this.$store.state.mission.uploaded;
         },
         isLive() {
             return this.$store.state.general.isLive;
