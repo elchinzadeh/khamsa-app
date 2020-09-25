@@ -30,7 +30,7 @@
                         <CustomMarker
                             :text="index + 1"
                             :data-index="index"
-                            :color="point.command === 'takeoff' ? 'green' : 'blue' "
+                            :type="point.command"
                             @click="pointClicked($event, index)"
                             @dblclick="pointDblclicked($event, index)"
                         />

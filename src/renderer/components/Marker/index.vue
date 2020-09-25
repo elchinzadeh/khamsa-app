@@ -73,7 +73,7 @@
                     />
                 </g>
                 <g
-                    :fill="color"
+                    :fill="markerColor"
                     :opacity="transparent ? opacity : 1"
                 >
                     <path
@@ -129,7 +129,6 @@ export default {
         color: {
             required: false,
             type: String,
-            default: 'blue',
         },
         transparent: {
             required: false,
@@ -145,6 +144,31 @@ export default {
             required: false,
             type: Boolean,
             default: false,
+        },
+        type: {
+            type: String,
+            required: false,
+            default: 'waypoint',
+        },
+    },
+    data() {
+        return {
+            colors: {
+                waypoint: 'blue',
+                takeoff: 'green',
+                land: 'purple',
+            },
+        };
+    },
+    computed: {
+        markerColor() {
+            if (this.color) {
+                return this.color;
+            } else if (this.type) {
+                return this.colors[this.type];
+            } else {
+                return 'blue';
+            }
         },
     },
 };

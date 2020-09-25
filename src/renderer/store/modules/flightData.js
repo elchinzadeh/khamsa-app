@@ -68,9 +68,7 @@ const actions = {
         commit('SET_DRONE_CURRENT_LOCATION', payload);
     },
     setDroneHomeLocation({ state, commit }, payload) {
-        if (!state.droneHomeLocation.length) {
-            commit('SET_DRONE_HOME_LOCATION', payload);
-        }
+        commit('SET_DRONE_HOME_LOCATION', payload);
     },
     addDroneTrajectory({ commit }, payload) {
         commit('ADD_DRONE_TRAJECTORY', payload);

@@ -25,6 +25,8 @@ const actions = {
             MissionStatus.PAUSED,
         ].includes(state.status) && payload < 100) {
             commit('SET_MISSION_PROGRESS', payload);
+        } else if (state.progress !== 100) {
+            commit('SET_MISSION_PROGRESS', 100);
         }
 
         if (Math.round(payload) === 100) {

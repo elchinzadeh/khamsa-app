@@ -22,9 +22,32 @@
                 <template slot="marker">
                     <CustomMarker
                         :text="index + 1"
-                        :color="point.command === 'takeoff' ? 'green' : 'blue'"
+                        :type="point.command"
                         transparent
                     />
+                </template>
+            </MglMarker>
+
+            <!-- Home Location Marker -->
+            <MglMarker
+                v-if="droneHomeLocation.length"
+                :coordinates="droneHomeLocation"
+                anchor="bottom"
+                :draggable="false"
+            >
+                <template slot="marker">
+                    <CustomMarker
+                        color="black"
+                        transparent
+                    >
+                        <template v-slot:icon>
+                            <HomeIcon
+                                size="16"
+                                title="Home"
+                                color="#fff"
+                            />
+                        </template>
+                    </CustomMarker>
                 </template>
             </MglMarker>
         </MglMap>
@@ -38,6 +61,7 @@ import Vue from 'vue';
 import { MglMap, MglNavigationControl, MglMarker } from 'vue-mapbox';
 import { $points_extrusion } from '@/core/layers.js';
 import * as mapboxgl from 'mapbox-gl';
+import { HomeIcon } from 'vue-feather-icons';
 import {
     MAPBOX_TOKEN,
     MAPBOX_STYLE_MONOCHROME,
@@ -55,6 +79,7 @@ export default {
         MglMarker,
         CustomMarker: Marker,
         ContextMenu,
+        HomeIcon,
     },
     data() {
         return {
