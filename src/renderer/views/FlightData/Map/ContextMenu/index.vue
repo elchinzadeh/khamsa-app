@@ -26,6 +26,7 @@ import { VueContext } from 'vue-context';
 import API from '@/api';
 import { swal } from '@/core/popups.js';
 import { $number_input } from '@/core/popup_options.js';
+import { MissionStatus } from '@/core/enums';
 
 
 export default {
@@ -51,6 +52,8 @@ export default {
                 latitude: this.latitude,
                 longitude: this.longitude,
             };
+
+            this.$store.dispatch('setMissionStatus', MissionStatus.PAUSED);
 
             API.flyToHere(data).then((response) => {
                 // response

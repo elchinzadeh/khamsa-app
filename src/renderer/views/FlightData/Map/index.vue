@@ -135,6 +135,7 @@ export default {
             // Context menu
             this.$flightDataMap.on('contextmenu', this.handleContextMenu);
 
+            console.clear();
             this.$Bus.$on('telemetry_data', (telemetry) => {
                 const keys = Object.keys(telemetry);
                 if (
@@ -175,6 +176,12 @@ export default {
                     this.droneInitialLocation = coordinates;
                 }
 
+                // Drone's home location
+                this.droneHomeLocation = [
+                    telemetry.home_location_lon,
+                    telemetry.home_location_lat,
+                ];
+
                 // Drone's current location
                 this.droneCurrentLocation = coordinates;
 
@@ -214,6 +221,14 @@ export default {
             },
             set(value) {
                 this.$store.dispatch('setDroneInitialLocation', value);
+            },
+        },
+        droneHomeLocation: {
+            get() {
+                return this.$store.state.flightData.droneHomeLocation;
+            },
+            set(value) {
+                this.$store.dispatch('setDroneHomeLocation', value);
             },
         },
         droneCurrentLocation: {

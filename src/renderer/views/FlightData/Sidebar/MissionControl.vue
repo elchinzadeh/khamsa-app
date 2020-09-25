@@ -9,7 +9,7 @@
                 @click="startMission"
                 :disabled="!startButtonActivated"
             >
-                Start
+                {{ startButtonText }}
             </Button>
             <Button
                 @click="pauseMission"
@@ -36,7 +36,7 @@
             <ProgressRing
                 :strokeWidth="6"
                 :percent="missionProgress"
-                :text="missionProgress >= 100 ? 'Completed' : null"
+                :text="missionStatus === MissionStatus.COMPLETED ? 'Completed' : null"
             />
         </div>
     </div>
@@ -55,7 +55,10 @@ export default {
         ProgressRing,
     },
     data() {
-        return { percent: 0 };
+        return {
+            percent: 0,
+            MissionStatus,
+        };
     },
     methods: {
         startMission() {
@@ -98,26 +101,38 @@ export default {
             },
         },
         startButtonActivated() {
-            return this.isLive && this.missionUploaded; /* && [
-                MissionStatus.UPLOADED,
-                MissionStatus.COMPLETED,
-            ].includes(this.missionStatus);*/
-        },
-        pauseButtonActivated() {
-            return this.isLive && this.missionUploaded; // && [MissionStatus.STARTED].includes(this.missionStatus);
-        },
-        abortButtonActivated() {
-            return this.isLive && this.missionUploaded; /* && [
+            return this.isLive && this.missionUploaded && [
                 MissionStatus.UPLOADED,
                 MissionStatus.STARTED,
                 MissionStatus.PAUSED,
                 MissionStatus.COMPLETED,
-            ].includes(this.missionStatus);*/
+            ].includes(this.missionStatus);
+        },
+        pauseButtonActivated() {
+            return this.isLive && this.missionUploaded && [MissionStatus.STARTED].includes(this.missionStatus);
+        },
+        abortButtonActivated() {
+            return this.isLive && this.missionUploaded && [
+                MissionStatus.UPLOADED,
+                MissionStatus.STARTED,
+                MissionStatus.PAUSED,
+                MissionStatus.COMPLETED,
+            ].includes(this.missionStatus);
         },
         continueButtonActivated() {
-            return this.isLive && this.missionUploaded; // && [MissionStatus.PAUSED].includes(this.missionStatus);
+            return this.isLive && this.missionUploaded && [MissionStatus.PAUSED].includes(this.missionStatus);
         },
-
+        startButtonText() {
+            if ([
+                MissionStatus.STARTED,
+                MissionStatus.PAUSED,
+                MissionStatus.COMPLETED,
+            ].includes(this.missionStatus)) {
+                return 'Restart';
+            } else {
+                return 'Start';
+            }
+        },
     },
 };
 </script>

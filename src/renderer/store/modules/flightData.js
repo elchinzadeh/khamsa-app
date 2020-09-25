@@ -1,6 +1,7 @@
 const state = {
     droneInitialLocation: null,
     droneCurrentLocation: [],
+    droneHomeLocation: [],
     dronePath: {
         id: 'live-data',
         type: 'FeatureCollection',
@@ -26,6 +27,7 @@ const state = {
         49.83846502960421,
         40.34346368003392,
     ],
+
     flightMode: null,
 };
 
@@ -35,6 +37,9 @@ const mutations = {
     },
     SET_DRONE_CURRENT_LOCATION(state, coordinates) {
         state.droneCurrentLocation = coordinates;
+    },
+    SET_DRONE_HOME_LOCATION(state, coordinates) {
+        state.droneHomeLocation = coordinates;
     },
     ADD_DRONE_TRAJECTORY(state, coordinates) {
         state.dronePath.features[0].geometry.coordinates.push(
@@ -61,6 +66,11 @@ const actions = {
     },
     setDroneCurrentLocation({ commit }, payload) {
         commit('SET_DRONE_CURRENT_LOCATION', payload);
+    },
+    setDroneHomeLocation({ state, commit }, payload) {
+        if (!state.droneHomeLocation.length) {
+            commit('SET_DRONE_HOME_LOCATION', payload);
+        }
     },
     addDroneTrajectory({ commit }, payload) {
         commit('ADD_DRONE_TRAJECTORY', payload);

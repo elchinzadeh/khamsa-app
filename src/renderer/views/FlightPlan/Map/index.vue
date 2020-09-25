@@ -44,6 +44,28 @@
                     layerId="somethingSomething"
                     :layer="geoJsonLayer"
                 />
+
+                <!-- Home Location Marker -->
+                <MglMarker
+                    v-if="droneHomeLocation.length"
+                    :coordinates="droneHomeLocation"
+                    anchor="bottom"
+                    :draggable="false"
+                >
+                    <template slot="marker">
+                        <CustomMarker
+                            color="black"
+                        >
+                            <template v-slot:icon>
+                                <HomeIcon
+                                    size="16"
+                                    title="Home"
+                                    color="#fff"
+                                />
+                            </template>
+                        </CustomMarker>
+                    </template>
+                </MglMarker>
             </MglMap>
 
             <!-- Context menu -->
@@ -69,6 +91,7 @@ import { MAPBOX_TOKEN, MAPBOX_STYLE_MONOCHROME } from '@/core/constants.js';
 import { swal } from '@/core/popups.js';
 import { $number_input } from '@/core/popup_options.js';
 import { Marker } from '@/components';
+import { HomeIcon } from 'vue-feather-icons';
 
 import ContextMenu from './ContextMenu';
 import EditPoint from './EditPoint';
@@ -84,6 +107,7 @@ export default {
         ContextMenu,
         EditPoint,
         VueResizable,
+        HomeIcon,
     },
     data() {
         return {
@@ -199,6 +223,9 @@ export default {
                 (window.outerHeight - 80) *
                 (this.resizable.maxHeightPercent / 100)
             );
+        },
+        droneHomeLocation() {
+            return this.$store.state.flightData.droneHomeLocation;
         },
     },
     watch: {

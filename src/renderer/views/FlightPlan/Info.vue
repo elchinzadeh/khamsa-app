@@ -125,6 +125,7 @@ import { TrashIcon } from 'vue-feather-icons';
 import API from '@/api';
 import { toast } from '@/core/popups';
 import { Button, Checkbox } from '@/components';
+import { MissionStatus } from '@/core/enums';
 
 export default {
     name: 'FlightPlanInfo',
@@ -187,6 +188,7 @@ export default {
 
             API.uploadMission(body).then((response) => {
                 this.$store.dispatch('setMissionUploaded', true);
+                this.$store.dispatch('setMissionStatus', MissionStatus.UPLOADED);
                 toast.fire({
                     type: 'success',
                     title: 'Mission uploaded',

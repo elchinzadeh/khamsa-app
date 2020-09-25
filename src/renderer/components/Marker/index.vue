@@ -104,6 +104,11 @@
                         {{ text }}
                     </text>
                 </g>
+                <g
+                    transform="translate(6, 6)"
+                >
+                    <slot name="icon"/>
+                </g>
             </g>
         </svg>
     </div>
@@ -114,11 +119,12 @@ export default {
     name: 'CustomMarker',
     props: {
         text: {
-            required: true,
+            required: false,
             type: [
                 String,
                 Number,
             ],
+            default: null,
         },
         color: {
             required: false,
