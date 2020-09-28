@@ -22,7 +22,7 @@ const state = {
             },
         },
     },
-    returnToLand: false,
+    returnToLaunch: false,
 };
 
 const mutations = {
@@ -73,7 +73,7 @@ const mutations = {
         state.dronePath.geoJsonSource.data.geometry.coordinates = coordinates;
     },
     SET_RETURN_TO_LAND(state, status) {
-        state.returnToLand = status;
+        state.returnToLaunch = status;
     },
 };
 
@@ -126,7 +126,7 @@ const actions = {
         commit('REMOVE_SELECTED_POINT');
         dispatch('setDronePathCoordinates');
     },
-    setDronePathCoordinates({ commit }) {
+    setDronePathCoordinates({ state, commit, rootState }) {
         let data = [];
 
         state.points.forEach((point, index) => {
@@ -146,10 +146,15 @@ const actions = {
             ];
         });
 
+        if (state.returnToLaunch) {
+            data.push(rootState.flightData.droneHomeLocation);
+        }
+
         commit('SET_DRONE_PATH_COORDINATES', data);
     },
-    setReturnToLand({ commit }, payload) {
+    setReturnToLaunch({ commit, dispatch }, payload) {
         commit('SET_RETURN_TO_LAND', payload);
+        dispatch('setDronePathCoordinates');
     },
 };
 

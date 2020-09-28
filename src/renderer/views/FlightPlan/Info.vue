@@ -4,7 +4,7 @@
         <div class="action-bar">
             <div class="action-bar__left">
                 <Checkbox
-                    v-model="returnToLand"
+                    v-model="returnToLaunch"
                     label="Return to launch"
                     :disabled="!isLive"
                 />
@@ -182,7 +182,7 @@ export default {
         uploadMission() {
             const body = {
                 points: this.points,
-                rtl: this.returnToLand,
+                rtl: this.returnToLaunch,
             };
             // deezer.com/en/track/883649052
 
@@ -203,12 +203,12 @@ export default {
         selectedPointIndex() {
             return this.$store.state.flightPlan.selectedPointIndex;
         },
-        returnToLand: {
+        returnToLaunch: {
             get() {
-                return this.$store.state.flightPlan.returnToLand;
+                return this.$store.state.flightPlan.returnToLaunch;
             },
             set(value) {
-                this.$store.dispatch('setReturnToLand', value);
+                this.$store.dispatch('setReturnToLaunch', value);
             },
         },
         isLive() {
