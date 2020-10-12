@@ -50,6 +50,18 @@
                     </CustomMarker>
                 </template>
             </MglMarker>
+
+            <!-- Marker -->
+            <MglMarker
+                v-if="flyToHereCoordinates"
+                :coordinates="flyToHereCoordinates"
+                anchor="center"
+                :draggable="false"
+            >
+                <template slot="marker">
+                    <WavyMarker/>
+                </template>
+            </MglMarker>
         </MglMap>
 
         <ContextMenu ref="context" />
@@ -66,7 +78,7 @@ import {
     MAPBOX_TOKEN,
     MAPBOX_STYLE_MONOCHROME,
 } from '@/core/constants.js';
-import { Marker } from '@/components';
+import { Marker, WavyMarker } from '@/components';
 import ContextMenu from './ContextMenu/index.vue';
 import ClearScreenControl from './Controls/ClearScreen';
 
@@ -80,6 +92,7 @@ export default {
         CustomMarker: Marker,
         ContextMenu,
         HomeIcon,
+        WavyMarker,
     },
     data() {
         return {
@@ -160,7 +173,6 @@ export default {
             // Context menu
             this.$flightDataMap.on('contextmenu', this.handleContextMenu);
 
-            console.clear();
             this.$Bus.$on('telemetry_data', (telemetry) => {
                 const keys = Object.keys(telemetry);
                 if (
@@ -283,6 +295,16 @@ export default {
             set(value) {
                 this.$store.dispatch('setMissionProgress', value);
             },
+        },
+        flyToHereCoordinates() {
+            if (this.$store.state.flightData.flyToHereLocation) {
+                const { longitude, latitude } = this.$store.state.flightData.flyToHereLocation;
+                return [
+                    longitude,
+                    latitude,
+                ];
+            }
+            return null;
         },
     },
     watch: {

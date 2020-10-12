@@ -1,3 +1,6 @@
+import { getDistanceMeters } from '../../helpers';
+let flyToHereTimeout;
+
 const state = {
     droneInitialLocation: null,
     droneCurrentLocation: [],
@@ -27,8 +30,8 @@ const state = {
         49.83846502960421,
         40.34346368003392,
     ],
-
     flightMode: null,
+    flyToHereLocation: null,
 };
 
 const mutations = {
@@ -58,17 +61,43 @@ const mutations = {
     SET_FLIGHT_MODE(state, value) {
         state.flightMode = value;
     },
+    SET_FLY_TO_HERE_LOCATION(state, value) {
+        state.flyToHereLocation = value;
+    },
 };
 
 const actions = {
     setDroneInitialLocation({ commit }, payload) {
         commit('SET_DRONE_INITIAL_LOCATION', payload);
     },
-    setDroneCurrentLocation({ commit }, payload) {
+    setDroneCurrentLocation({ state, dispatch, commit }, payload) {
         commit('SET_DRONE_CURRENT_LOCATION', payload);
+
+        const [
+            currentLng,
+            currentLat,
+        ] = payload;
+
+        const meters = getDistanceMeters({
+            latitude: currentLat,
+            longitude: currentLng,
+        }, state.flyToHereLocation);
+
+        if (meters <= 5) {
+            if (!flyToHereTimeout) {
+                flyToHereTimeout = setTimeout(function() {
+                    dispatch('setFlyToHereLocation', null);
+                }, 5000);
+            }
+        } else {
+            clearTimeout(flyToHereTimeout);
+            flyToHereTimeout = null;
+        }
     },
-    setDroneHomeLocation({ commit }, payload) {
-        commit('SET_DRONE_HOME_LOCATION', payload);
+    setDroneHomeLocation({ state, commit }, payload) {
+        if (state.droneHomeLocation !== payload) {
+            commit('SET_DRONE_HOME_LOCATION', payload);
+        }
     },
     addDroneTrajectory({ commit }, payload) {
         commit('ADD_DRONE_TRAJECTORY', payload);
@@ -82,6 +111,12 @@ const actions = {
     },
     setFlightMode({ commit }, payload) {
         commit('SET_FLIGHT_MODE', payload);
+    },
+    setFlyToHereLocation({ commit }, payload) {
+        commit('SET_FLY_TO_HERE_LOCATION', payload);
+        // if (payload) {
+        //     clearTimeout(flyToHereTimeout);
+        // }
     },
 };
 

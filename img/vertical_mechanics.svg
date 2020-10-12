@@ -81,13 +81,13 @@
 <polygon fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" points="92.042,241.446 88.167,239.208 92.813,237.27 "/>
 <text transform="matrix(1 0 0 1 125.0005 184.6665)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.5" stroke-miterlimit="10" font-family="sans-serif" font-size="10">UP</text>
 <text transform="matrix(1 0 0 1 125.0005 222.6665)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.5" stroke-miterlimit="10" font-family="sans-serif" font-size="10">DOWN</text>
-<text transform="matrix(1 0 0 1 193.6592 102.1489)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" font-family="sans-serif" font-size="25">1</text>
-<text transform="matrix(1 0 0 1 192.6592 316.4985)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" font-family="sans-serif" font-size="25">1</text>
-<text transform="matrix(1 0 0 1 112.1099 131.8608)" fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" font-family="sans-serif" font-size="25">.5</text>
-<text transform="matrix(1 0 0 1 112.1108 283.5313)" fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" font-family="sans-serif" font-size="25">.5</text>
-<text transform="matrix(1 0 0 1 258.8477 135.4829)"><tspan x="0" y="0" fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" font-family="sans-serif" font-size="25" letter-spacing="-3">1</tspan><tspan x="10.355" y="0" fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" font-family="sans-serif" font-size="25">.5</tspan></text>
-<text transform="matrix(1 0 0 1 261.2246 281.8164)"><tspan x="0" y="0" fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" font-family="sans-serif" font-size="25" letter-spacing="-3">1</tspan><tspan x="10.355" y="0" fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" font-family="sans-serif" font-size="25">.5</tspan></text>
-<text transform="matrix(1 0 0 1 304.8989 208.5229)" fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" font-family="sans-serif" font-size="25" letter-spacing="-3">2</text>
-<text transform="matrix(1 0 0 1 143.4497 165.6895)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.5" stroke-miterlimit="10" font-family="sans-serif" font-size="14">VERTICAL SPEED</text>
-<text transform="matrix(1 0 0 1 146.4497 242.3579)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.5" stroke-miterlimit="10" font-family="sans-serif" font-size="14">1000FT PER MIN</text>
+<text transform="matrix(1 0 0 1 193.6592 102.1489)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" font-family="sans-serif" font-size="25">5</text>
+<text transform="matrix(1 0 0 1 192.6592 316.4985)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.5" stroke-miterlimit="10" font-family="sans-serif" font-size="25">5</text>
+<text transform="matrix(1 0 0 1 112.1099 131.8608)" fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" font-family="sans-serif" font-size="25">2.5</text>
+<text transform="matrix(1 0 0 1 112.1108 283.5313)" fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" font-family="sans-serif" font-size="25">2.5</text>
+<text transform="matrix(1 0 0 1 258.8477 135.4829)" fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" font-family="sans-serif" font-size="25">7.5</text>
+<text transform="matrix(1 0 0 1 261.2246 281.8164)" fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" font-family="sans-serif" font-size="25">7.5</text>
+<text transform="matrix(1 0 0 1 304.8989 208.5229)" fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" font-family="sans-serif" font-size="25" letter-spacing="-3">10</text>
+<text transform="matrix(1 0 0 1 147.4497 165.6895)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.5" stroke-miterlimit="10" font-family="sans-serif" font-size="14">GROUND SPEED</text>
+<text transform="matrix(1 0 0 1 180.4497 242.3579)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.5" stroke-miterlimit="10" font-family="sans-serif" font-size="14">M/SEC</text>
 </svg>

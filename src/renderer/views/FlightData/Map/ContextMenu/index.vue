@@ -53,7 +53,10 @@ export default {
                 longitude: this.longitude,
             };
 
-            this.$store.dispatch('setMissionStatus', MissionStatus.PAUSED);
+            if (this.$store.state.mission.uploaded) {
+                this.$store.dispatch('setMissionStatus', MissionStatus.PAUSED);
+            }
+            this.$store.dispatch('setFlyToHereLocation', data);
 
             API.flyToHere(data).then((response) => {
                 // response

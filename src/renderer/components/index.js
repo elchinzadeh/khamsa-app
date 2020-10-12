@@ -6,3 +6,4 @@ export { default as MenuDropdown } from './MenuDropdown';
 export { default as Modal } from './Modal';
 export { default as ProgressBar } from './ProgressBar';
 export { default as ProgressRing } from './ProgressRing';
+export { default as WavyMarker } from './WavyMarker';

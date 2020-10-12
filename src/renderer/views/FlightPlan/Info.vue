@@ -187,7 +187,6 @@ export default {
             // deezer.com/en/track/883649052
 
             API.uploadMission(body).then((response) => {
-                this.$store.dispatch('setMissionUploaded', true);
                 this.$store.dispatch('setMissionStatus', MissionStatus.UPLOADED);
                 toast.fire({
                     type: 'success',

@@ -3,6 +3,7 @@ export const MissionStatus = Object.freeze({
     UPLOADED: 'uploaded',
     STARTED: 'started',
     PAUSED: 'paused',
+    CONTINUED: 'continued',
     ABORTED: 'aborted',
     COMPLETED: 'completed',
 });

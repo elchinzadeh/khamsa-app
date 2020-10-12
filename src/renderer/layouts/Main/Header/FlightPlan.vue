@@ -14,6 +14,7 @@
 <script>
 import API from '@/api';
 import { toast } from '@/core/popups';
+import { MissionStatus } from '@/core/enums';
 
 export default {
     name: 'FlightPlanHeader',
@@ -26,9 +27,11 @@ export default {
                         type: 'success',
                         title: 'Mission started',
                     });
+                    this.$store.dispatch('setMissionStatus', MissionStatus.STARTED);
                 });
             }
         },
+
     },
     computed: {
         missionUploded() {

@@ -22,25 +22,41 @@ const actions = {
     setMissionProgress({ state, commit }, payload) {
         if ([
             MissionStatus.STARTED,
-            MissionStatus.PAUSED,
-        ].includes(state.status) && payload < 100) {
-            commit('SET_MISSION_PROGRESS', payload);
-        } else if (state.progress !== 100) {
-            commit('SET_MISSION_PROGRESS', 100);
+            MissionStatus.CONTINUED,
+        ].includes(state.status)) {
+            if (payload <= 100) {
+                commit('SET_MISSION_PROGRESS', payload);
+            } else {
+                commit('SET_MISSION_PROGRESS', 100);
+            }
         }
 
         if (Math.round(payload) === 100) {
             commit('SET_MISSION_STATUS', MissionStatus.COMPLETED);
         }
-    },
-    setMissionUploaded({ commit }, payload) {
-        commit('SET_MISSION_UPLOADED', payload);
+
+        if ([
+            MissionStatus.NOT_UPLOADED,
+            MissionStatus.UPLOADED,
+            MissionStatus.ABORTED,
+        ].includes(state.status)) {
+            commit('SET_MISSION_PROGRESS', 0);
+        }
     },
     setMissionStatus({ commit }, payload) {
+        console.log(payload);
         commit('SET_MISSION_STATUS', payload);
 
-        if (payload === MissionStatus.ABORTED) {
+        if ([
+            MissionStatus.NOT_UPLOADED,
+            MissionStatus.UPLOADED,
+            MissionStatus.ABORTED,
+        ].includes(payload)) {
             commit('SET_MISSION_PROGRESS', 0);
+        }
+
+        if (MissionStatus.UPLOADED === payload) {
+            commit('SET_MISSION_UPLOADED', true);
         }
     },
 };

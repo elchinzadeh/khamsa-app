@@ -36,7 +36,7 @@
             <ProgressRing
                 :strokeWidth="6"
                 :percent="missionProgress"
-                :text="missionStatus === MissionStatus.COMPLETED ? 'Completed' : null"
+                :text="shownStatus"
             />
         </div>
     </div>
@@ -46,6 +46,7 @@
 import API from '@/api';
 import { Button, ProgressBar, ProgressRing } from '@/components';
 import { MissionStatus } from '@/core/enums';
+import { toast } from '@/core/popups.js';
 
 export default {
     name: 'MissionControl',
@@ -58,12 +59,18 @@ export default {
         return {
             percent: 0,
             MissionStatus,
+            shownStatus: '',
+            shownStatusTimeout: null,
         };
     },
     methods: {
         startMission() {
             API.startMission().then(() => {
                 this.missionStatus = MissionStatus.STARTED;
+                toast.fire({
+                    type: 'success',
+                    title: 'Mission started',
+                });
             });
         },
         pauseMission() {
@@ -78,7 +85,7 @@ export default {
         },
         continueMission() {
             API.continueMission().then(() => {
-                this.missionStatus = MissionStatus.STARTED;
+                this.missionStatus = MissionStatus.CONTINUED;
             });
         },
     },
@@ -105,17 +112,22 @@ export default {
                 MissionStatus.UPLOADED,
                 MissionStatus.STARTED,
                 MissionStatus.PAUSED,
+                MissionStatus.CONTINUED,
                 MissionStatus.COMPLETED,
             ].includes(this.missionStatus);
         },
         pauseButtonActivated() {
-            return this.isLive && this.missionUploaded && [MissionStatus.STARTED].includes(this.missionStatus);
+            return this.isLive && this.missionUploaded && [
+                MissionStatus.STARTED,
+                MissionStatus.CONTINUED,
+            ].includes(this.missionStatus);
         },
         abortButtonActivated() {
             return this.isLive && this.missionUploaded && [
                 MissionStatus.UPLOADED,
                 MissionStatus.STARTED,
                 MissionStatus.PAUSED,
+                MissionStatus.CONTINUED,
                 MissionStatus.COMPLETED,
             ].includes(this.missionStatus);
         },
@@ -126,11 +138,48 @@ export default {
             if ([
                 MissionStatus.STARTED,
                 MissionStatus.PAUSED,
+                MissionStatus.CONTINUED,
                 MissionStatus.COMPLETED,
             ].includes(this.missionStatus)) {
                 return 'Restart';
             } else {
                 return 'Start';
+            }
+        },
+    },
+    watch: {
+        missionStatus(status) {
+            clearTimeout(this.shownStatusTimeout);
+
+            if (status === MissionStatus.NOT_UPLOADED) {
+                this.shownStatus = '';
+            }
+            if (status === MissionStatus.UPLOADED) {
+                this.shownStatus = 'Uploaded';
+            }
+            if (status === MissionStatus.STARTED) {
+                this.shownStatus = 'Started';
+                this.shownStatusTimeout = setTimeout(() => {
+                    this.shownStatus = 'In Progress';
+                }, 2000);
+            }
+            if (status === MissionStatus.PAUSED) {
+                this.shownStatus = 'Paused';
+            }
+            if (status === MissionStatus.CONTINUED) {
+                this.shownStatus = 'Continued';
+                this.shownStatusTimeout = setTimeout(() => {
+                    this.shownStatus = 'In Progress';
+                }, 2000);
+            }
+            if (status === MissionStatus.ABORTED) {
+                this.shownStatus = 'Aborted';
+                this.shownStatusTimeout = setTimeout(() => {
+                    this.shownStatus = '';
+                }, 5000);
+            }
+            if (status === MissionStatus.COMPLETED) {
+                this.shownStatus = 'Completed';
             }
         },
     },
