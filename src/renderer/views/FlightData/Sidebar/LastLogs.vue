@@ -32,6 +32,11 @@
                 <span>Air speed:</span>
                 <span>{{ telemetry.airSpeed }}</span>
             </li>
+
+            <li>
+                <span>Number of satellites:</span>
+                <span>0</span>
+            </li>
         </ul>
     </div>
 </template>

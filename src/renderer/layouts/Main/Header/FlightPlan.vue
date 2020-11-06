@@ -28,6 +28,11 @@ export default {
                         title: 'Mission started',
                     });
                     this.$store.dispatch('setMissionStatus', MissionStatus.STARTED);
+                }).catch(() => {
+                    toast.fire({
+                        type: 'error',
+                        title: 'Failed to start mission',
+                    });
                 });
             }
         },

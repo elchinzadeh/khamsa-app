@@ -48,6 +48,7 @@
 import API from '@/api';
 import { swal } from '@/core/popups.js';
 import { $number_input } from '@/core/popup_options.js';
+import { toast } from '@/core/popups.js';
 
 export default {
     name: 'FlightDataHeader',
@@ -61,19 +62,31 @@ export default {
         arm() {
             API.arm()
                 .then((response) => {
-                    console.log('Armed');
+                    toast.fire({
+                        type: 'success',
+                        title: 'Armed',
+                    });
                 })
                 .catch((error) => {
-                    console.log('Arming failed', error);
+                    toast.fire({
+                        type: 'error',
+                        title: 'Arming failed',
+                    });
                 });
         },
         disarm() {
             API.disarm()
                 .then((response) => {
-                    console.log('Disarmed');
+                    toast.fire({
+                        type: 'success',
+                        title: 'Disarmed',
+                    });
                 })
                 .catch((error) => {
-                    console.log('Disarming failed', error);
+                    toast.fire({
+                        type: 'error',
+                        title: 'Disarming failed',
+                    });
                 });
         },
         takeoff() {
@@ -87,10 +100,16 @@ export default {
 
                 API.takeoff(body)
                     .then((response) => {
-                        console.log('Takeoff');
+                        toast.fire({
+                            type: 'success',
+                            title: 'Takeoff',
+                        });
                     })
                     .catch((error) => {
-                        console.log('Takeoff failed', error);
+                        toast.fire({
+                            type: 'error',
+                            title: 'Takeoff failed',
+                        });
                     });
             });
         },

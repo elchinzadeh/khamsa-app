@@ -71,21 +71,53 @@ export default {
                     type: 'success',
                     title: 'Mission started',
                 });
+            }).catch(() => {
+                toast.fire({
+                    type: 'error',
+                    title: 'Failed to start mission',
+                });
             });
         },
         pauseMission() {
             API.pauseMission().then(() => {
                 this.missionStatus = MissionStatus.PAUSED;
+                toast.fire({
+                    type: 'success',
+                    title: 'Mission paused',
+                });
+            }).catch(() => {
+                toast.fire({
+                    type: 'error',
+                    title: 'Failed to pause mission',
+                });
             });
         },
         abortMission() {
             API.abortMission().then(() => {
                 this.missionStatus = MissionStatus.ABORTED;
+                toast.fire({
+                    type: 'success',
+                    title: 'Mission aborted',
+                });
+            }).catch(() => {
+                toast.fire({
+                    type: 'error',
+                    title: 'Failed to abort mission',
+                });
             });
         },
         continueMission() {
             API.continueMission().then(() => {
                 this.missionStatus = MissionStatus.CONTINUED;
+                toast.fire({
+                    type: 'success',
+                    title: 'Mission continues',
+                });
+            }).catch(() => {
+                toast.fire({
+                    type: 'error',
+                    title: 'Failed to continue mission',
+                });
             });
         },
     },

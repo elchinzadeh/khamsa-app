@@ -1,6 +1,8 @@
 <template>
     <div class="sidebar__indicators">
-        <span id="attitude"></span>
+        <HUD
+            :hudData="hudData"
+        />
         <span id="heading"></span>
         <span id="altimeter"></span>
         <span id="airspeed"></span>
@@ -10,14 +12,45 @@
 
 <script>
 import 'jquery-flight-indicators/js/jquery.flightindicators.min.js';
+import HUD from './HUD';
 
 export default {
+    components: { HUD },
+    data() {
+        return {
+            initPositions: {
+                heading: {
+                    heading: 0,
+                    showBox: true,
+                },
+                attitude: {
+                    roll: 0,
+                    pitch: 0,
+                    size: 200,
+                    showBox: true,
+                },
+                variometer: {
+                    vario: 0,
+                    showBox: true,
+                },
+                airSpeed: { showBox: false },
+            },
+            hudData: {
+                yaw: 0,
+                pitch: 0,
+                roll: 0,
+                airSpeed: 0,
+                verticalSpeed: 0,
+                altitude: 0,
+            },
+        };
+    },
     mounted() {
-        const attitude = $.flightIndicator(
-            '#attitude',
-            'attitude',
-            this.initPositions.attitude,
-        );
+        // const attitude = $.flightIndicator(
+        //     '#attitude',
+        //     'attitude',
+        //     this.initPositions.attitude,
+        // );
         const heading = $.flightIndicator(
             '#heading',
             'heading',
@@ -50,34 +83,20 @@ export default {
                 // }
 
                 heading.setHeading(yaw_deg);
-                attitude.setRoll(roll_deg);
-                attitude.setPitch(pitch_deg);
+                // attitude.setRoll(roll_deg);
+                // attitude.setPitch(pitch_deg);
                 airspeed.setAirSpeed(Math.abs(velocity_east_m_s));
                 variometer.setVario(Math.abs(velocity_down_m_s));
                 altimeter.setAltitude(relative_altitude_m * 10);
+
+                this.hudData.yaw = yaw_deg;
+                this.hudData.pitch = pitch_deg;
+                this.hudData.roll = roll_deg;
+                this.hudData.airSpeed = Math.abs(velocity_east_m_s).toFixed(2);
+                this.hudData.verticalSpeed = Math.abs(velocity_down_m_s).toFixed(2);
+                this.hudData.altitude = relative_altitude_m.toFixed(2);
             },
         );
-    },
-    data() {
-        return {
-            initPositions: {
-                heading: {
-                    heading: 0,
-                    showBox: true,
-                },
-                attitude: {
-                    roll: 0,
-                    pitch: 0,
-                    size: 200,
-                    showBox: true,
-                },
-                variometer: {
-                    vario: 0,
-                    showBox: true,
-                },
-                airSpeed: { showBox: false },
-            },
-        };
     },
 };
 </script>

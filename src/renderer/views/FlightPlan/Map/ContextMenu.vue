@@ -40,7 +40,7 @@
 
 <script>
 import { VueContext } from 'vue-context';
-import { swal } from '@/core/popups.js';
+import { swal, toast } from '@/core/popups.js';
 import { $number_input } from '@/core/popup_options.js';
 import '@/styles/components/contextMenu.scss';
 
@@ -95,6 +95,10 @@ export default {
         },
         clearMission() {
             this.$store.dispatch('deleteAllPoints');
+            toast.fire({
+                type: 'success',
+                title: 'Mission cleared',
+            });
         },
         detectMarker(elements) {
             let isMarker = false;

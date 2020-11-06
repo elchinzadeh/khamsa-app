@@ -1,0 +1,918 @@
+<template>
+    <span id="hud">
+        <div
+            class="instrument attitude"
+            style="height: 200px; width: 200px;"
+        >
+            <img
+                src="img/fi_box.svg"
+                class="background box"
+                alt=""
+            >
+            <div class="hud-holder">
+                <svg viewBox="0 0 520 520">
+                    <!-- Outer circle -->
+                    <circle
+                        cx="260"
+                        cy="260"
+                        r="250"
+                        stroke="#ffffff"
+                        stroke-width="2"
+                        fill="transparent"
+                    ></circle>
+
+                    <!-- Compass - Yaw -->
+                    <svg height="260">
+                        <g
+                            id="yaw"
+                            transform-origin="260"
+                            :style="`transform: rotate(${hudData.yaw}deg)`"
+                        >
+                            <circle
+                                cy="260"
+                                cx="260"
+                                r="210"
+                                stroke="#ffffff"
+                                stroke-width="2"
+                                fill="transparent"
+                            ></circle>
+                            <g id="compass-lines">
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(15, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(30, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(60, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(75, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(105, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(120, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(150, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(165, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(195, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(210, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(240, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(255, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(285, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(300, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(330, 260, 260)"
+                                />
+                                <line
+                                    x1="260"
+                                    x2="260"
+                                    y1="36"
+                                    y2="44"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                    transform="rotate(345, 260, 260)"
+                                />
+                            </g>
+                            <g id="compass-texts">
+                                <text
+                                    x="260"
+                                    y="38"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(0, 260, 260)"
+                                    font-size="22"
+                                >
+                                    N
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(15, 260, 260)"
+                                >
+                                    15
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(30, 260, 260)"
+                                >
+                                    30
+                                </text>
+                                <text
+                                    x="260"
+                                    y="38"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(45, 260, 260)"
+                                    font-size="22"
+                                >
+                                    NE
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(60, 260, 260)"
+                                >
+                                    60
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(75, 260, 260)"
+                                >
+                                    75
+                                </text>
+                                <text
+                                    x="260"
+                                    y="38"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(90, 260, 260)"
+                                    font-size="22"
+                                >
+                                    E
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(105, 260, 260)"
+                                >
+                                    105
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(120, 260, 260)"
+                                >
+                                    120
+                                </text>
+                                <text
+                                    x="260"
+                                    y="38"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(135, 260, 260)"
+                                    font-size="22"
+                                >
+                                    SE
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(150, 260, 260)"
+                                >
+                                    150
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(165, 260, 260)"
+                                >
+                                    165
+                                </text>
+                                <text
+                                    x="260"
+                                    y="38"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(180, 260, 260)"
+                                    font-size="22"
+                                >
+                                    S
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(195, 260, 260)"
+                                >
+                                    195
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(210, 260, 260)"
+                                >
+                                    210
+                                </text>
+                                <text
+                                    x="260"
+                                    y="38"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(225, 260, 260)"
+                                    font-size="22"
+                                >
+                                    SW
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(240, 260, 260)"
+                                >
+                                    240
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(255, 260, 260)"
+                                >
+                                    255
+                                </text>
+                                <text
+                                    x="260"
+                                    y="38"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(270, 260, 260)"
+                                    font-size="22"
+                                >
+                                    W
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(285, 260, 260)"
+                                >
+                                    285
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(300, 260, 260)"
+                                >
+                                    300
+                                </text>
+                                <text
+                                    x="260"
+                                    y="38"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(315, 260, 260)"
+                                    font-size="22"
+                                >
+                                    NW
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(330, 260, 260)"
+                                >
+                                    330
+                                </text>
+                                <text
+                                    x="260"
+                                    y="30"
+                                    text-anchor="middle"
+                                    fill="#ffffff"
+                                    transform="rotate(345, 260, 260)"
+                                >
+                                    345
+                                </text>
+                            </g>
+                        </g>
+                        <polygon
+                            points="260,54 278,90 242,90"
+                            fill="transparent"
+                            stroke="#ffffff"
+                            stroke-width="2"
+                        />
+                        <text
+                            x="260"
+                            y="110"
+                            text-anchor="middle"
+                            fill="#ffffff"
+                        >
+                            {{hudData.yaw}}
+                        </text>
+                    </svg>
+
+                    <!-- Pitch -->
+                    <svg
+                        x="136"
+                        y="120"
+                        width="248"
+                        height="280"
+                    >
+                        <g
+                            id="pitch"
+                            :style="`transform: translateY(${(hudData.pitch / 35) * 100 / 2}%)`"
+                        >
+                            <!-- Pitch - left -->
+                            <!-- Vertical line -->
+                            <line
+                                x1="0"
+                                x2="0"
+                                y1="0"
+                                y2="280"
+                                stroke="#ffffff"
+                                stroke-width="2"
+                            />
+                            <!-- Short lines -->
+                            <g>
+                                <line
+                                    x1="4"
+                                    x2="22"
+                                    y1="20"
+                                    y2="20"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="4"
+                                    x2="13"
+                                    y1="40"
+                                    y2="40"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="4"
+                                    x2="22"
+                                    y1="60"
+                                    y2="60"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="4"
+                                    x2="13"
+                                    y1="80"
+                                    y2="80"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="4"
+                                    x2="22"
+                                    y1="100"
+                                    y2="100"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="4"
+                                    x2="13"
+                                    y1="120"
+                                    y2="120"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="4"
+                                    x2="22"
+                                    y1="140"
+                                    y2="140"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="4"
+                                    x2="13"
+                                    y1="160"
+                                    y2="160"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="4"
+                                    x2="22"
+                                    y1="180"
+                                    y2="180"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="4"
+                                    x2="13"
+                                    y1="200"
+                                    y2="200"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="4"
+                                    x2="22"
+                                    y1="220"
+                                    y2="220"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="4"
+                                    x2="13"
+                                    y1="240"
+                                    y2="240"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="4"
+                                    x2="22"
+                                    y1="260"
+                                    y2="260"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                            </g>
+                            <!-- Texts -->
+                            <g>
+                                <text
+                                    x="20"
+                                    y="40"
+                                    text-anchor="start"
+                                    alignment-baseline="middle"
+                                    fill="#ffffff"
+                                >
+                                    25
+                                </text>
+                                <text
+                                    x="20"
+                                    y="80"
+                                    text-anchor="start"
+                                    alignment-baseline="middle"
+                                    fill="#ffffff"
+                                >
+                                    15
+                                </text>
+                                <text
+                                    x="20"
+                                    y="120"
+                                    text-anchor="start"
+                                    alignment-baseline="middle"
+                                    fill="#ffffff"
+                                >
+                                    5
+                                </text>
+                                <text
+                                    x="20"
+                                    y="160"
+                                    text-anchor="start"
+                                    alignment-baseline="middle"
+                                    fill="#ffffff"
+                                >
+                                    5
+                                </text>
+                                <text
+                                    x="20"
+                                    y="200"
+                                    text-anchor="start"
+                                    alignment-baseline="middle"
+                                    fill="#ffffff"
+                                >
+                                    15
+                                </text>
+                                <text
+                                    x="20"
+                                    y="240"
+                                    text-anchor="start"
+                                    alignment-baseline="middle"
+                                    fill="#ffffff"
+                                >
+                                    25
+                                </text>
+                            </g>
+
+                            <!-- Pitch - right -->
+                            <!-- Vertical line -->
+                            <line
+                                x1="248"
+                                x2="248"
+                                y1="0"
+                                y2="280"
+                                stroke="#ffffff"
+                                stroke-width="2"
+                            />
+                            <!-- Short lines -->
+                            <g>
+                                <line
+                                    x1="226"
+                                    x2="244"
+                                    y1="20"
+                                    y2="20"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="235"
+                                    x2="244"
+                                    y1="40"
+                                    y2="40"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="226"
+                                    x2="244"
+                                    y1="60"
+                                    y2="60"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="235"
+                                    x2="244"
+                                    y1="80"
+                                    y2="80"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="226"
+                                    x2="244"
+                                    y1="100"
+                                    y2="100"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="235"
+                                    x2="244"
+                                    y1="120"
+                                    y2="120"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="226"
+                                    x2="244"
+                                    y1="140"
+                                    y2="140"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="235"
+                                    x2="244"
+                                    y1="160"
+                                    y2="160"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="226"
+                                    x2="244"
+                                    y1="180"
+                                    y2="180"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="235"
+                                    x2="244"
+                                    y1="200"
+                                    y2="200"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="226"
+                                    x2="244"
+                                    y1="220"
+                                    y2="220"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="235"
+                                    x2="244"
+                                    y1="240"
+                                    y2="240"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                                <line
+                                    x1="226"
+                                    x2="244"
+                                    y1="260"
+                                    y2="260"
+                                    stroke="#ffffff"
+                                    stroke-width="2"
+                                />
+                            </g>
+                            <!-- Texts -->
+                            <g>
+                                <text
+                                    x="228"
+                                    y="40"
+                                    text-anchor="end"
+                                    alignment-baseline="middle"
+                                    fill="#ffffff"
+                                >
+                                    25
+                                </text>
+                                <text
+                                    x="228"
+                                    y="80"
+                                    text-anchor="end"
+                                    alignment-baseline="middle"
+                                    fill="#ffffff"
+                                >
+                                    15
+                                </text>
+                                <text
+                                    x="228"
+                                    y="120"
+                                    text-anchor="end"
+                                    alignment-baseline="middle"
+                                    fill="#ffffff"
+                                >
+                                    5
+                                </text>
+                                <text
+                                    x="228"
+                                    y="160"
+                                    text-anchor="end"
+                                    alignment-baseline="middle"
+                                    fill="#ffffff"
+                                >
+                                    5
+                                </text>
+                                <text
+                                    x="228"
+                                    y="200"
+                                    text-anchor="end"
+                                    alignment-baseline="middle"
+                                    fill="#ffffff"
+                                >
+                                    15
+                                </text>
+                                <text
+                                    x="228"
+                                    y="240"
+                                    text-anchor="end"
+                                    alignment-baseline="middle"
+                                    fill="#ffffff"
+                                >
+                                    25
+                                </text>
+                            </g>
+                        </g>
+                    </svg>
+
+                    <!-- Plane -->
+                    <line
+                        x1="190"
+                        x2="330"
+                        y1="260"
+                        y2="260"
+                        stroke="#ffffff"
+                        stroke-width="4"
+                    />
+                    <circle
+                        cx="260"
+                        cy="260"
+                        r="10"
+                        fill="#ffffff"
+                    ></circle>
+
+                    <!-- Height  -->
+                    <line
+                        x1="10"
+                        x2="136"
+                        y1="260"
+                        y2="260"
+                        stroke="#ffffff"
+                        stroke-width="2"
+                    />
+                    <text
+                        x="73"
+                        y="280"
+                        text-anchor="middle"
+                        fill="#ffffff"
+                    >
+                        HEIGHT
+                    </text>
+                    <text
+                        x="80"
+                        y="345"
+                        text-anchor="middle"
+                        fill="#ffffff"
+                    >
+                        <tspan font-size="30">{{hudData.altitude}}</tspan>
+                        <tspan font-size="20">m</tspan>
+                    </text>
+
+                    <!-- Vertical speed -->
+                    <line
+                        x1="384"
+                        x2="510"
+                        y1="260"
+                        y2="260"
+                        stroke="#ffffff"
+                        stroke-width="2"
+                    />
+                    <text
+                        x="447"
+                        y="280"
+                        text-anchor="middle"
+                        fill="#ffffff"
+                    >
+                        <tspan
+                            x="447"
+                            y="280"
+                        >
+                            VERTICAL
+                        </tspan>
+                        <tspan
+                            x="447"
+                            y="295"
+                        >
+                            SPEED
+                        </tspan>
+                    </text>
+                    <text
+                        x="440"
+                        y="345"
+                        text-anchor="middle"
+                        fill="#ffffff"
+                    >
+                        <tspan font-size="20">{{hudData.verticalSpeed}}</tspan>
+                        <tspan font-size="20">m/s</tspan>
+                    </text>
+
+                    <!-- Air speed -->
+                    <line
+                        x1="53"
+                        x2="467"
+                        y1="400"
+                        y2="400"
+                        stroke="#ffffff"
+                        stroke-width="2"
+                    />
+                    <text
+                        x="260"
+                        y="420"
+                        text-anchor="middle"
+                        fill="#ffffff"
+                    >
+                        AIR SPEED
+                    </text>
+                    <text
+                        x="260"
+                        y="470"
+                        text-anchor="middle"
+                        fill="#ffffff"
+                    >
+                        <tspan font-size="30">{{hudData.airSpeed}}</tspan>
+                        <tspan font-size="20">km/h</tspan>
+                    </text>
+                </svg>
+            </div>
+        </div>
+    </span>
+</template>
+
+<script>
+export default {
+    name: 'HUD',
+    props: {
+        hudData: {
+            type: Object,
+            required: true,
+        },
+    },
+};
+</script>
+
+<style>
+
+</style>

@@ -340,7 +340,17 @@ export default {
         },
         changeMode(key) {
             const body = { mode: key };
-            API.setMode(body);
+            API.setMode(body).then((response) => {
+                toast.fire({
+                    type: 'success',
+                    title: 'Mode changed',
+                });
+            }).catch((response) => {
+                toast.fire({
+                    type: 'error',
+                    title: 'Failed to change mode',
+                });
+            });
         },
         changePage(key) {
             if (this.$route.name !== key) {

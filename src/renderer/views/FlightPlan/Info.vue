@@ -192,6 +192,11 @@ export default {
                     type: 'success',
                     title: 'Mission uploaded',
                 });
+            }).catch(() => {
+                toast.fire({
+                    type: 'error',
+                    title: 'Failed to upload mission',
+                });
             });
         },
     },
